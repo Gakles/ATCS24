@@ -43,9 +43,22 @@ def draw_static_info(screen, window_width, window_height, info_zone_height, cale
     pillow_rect = pillow_image.get_rect(left=2 * window_width // 3 + 3 * box_width - 4, top=info_zone_height - pillow_image.get_height() - 2)
     screen.blit(pillow_image, pillow_rect)
 
-    def draw_dynamic_info(screen, window_width, window_height, info_zone_height, time_of_day):
-        pygame.draw.rect(screen, (192, 192, 192), (0, 0, window_width/7, info_zone_height/4))
-        font = pygame.font.Font(None, 16)
-        text = font.render(time_of_day, True, (0, 0, 0))  # Black text
-        text_rect = text.get_rect(center=(window_width/2, info_zone_height/4))
-        screen.blit(text, )
+def draw_dynamic_info(screen, window_width, window_height, info_zone_height, time_of_day):
+    # Convert minutes to hours and minutes
+    hours = time_of_day // 60
+    minutes = time_of_day % 60
+    
+    # Convert to 12-hour time format
+    am_pm = "AM" if hours < 12 else "PM"
+    hours = hours % 12 or 12  # Make 0 or 12 display as 12
+    
+    # Create a string in the format "hh:mm AM/PM"
+    time_string = f"{hours:02d}:{minutes:02d} {am_pm}"
+    print(time_string)
+    font = pygame.font.Font(None, 36)
+    text = font.render(time_string, True, (200, 100, 200))
+    text_rect = text.get_rect(center=(window_width // 2, info_zone_height // 4))
+    pygame.draw.rect(screen, (192, 192, 192), text_rect)
+    
+    screen.blit(text, text_rect)
+

@@ -34,6 +34,10 @@ pygame.display.set_caption("Pygame Game Loop")
 #homework
 testhwk = homework.Homework("major", "English", 240, "Bibliography")
 
+#time
+time = 0
+last_time  = 0
+
 # Load images
 current_path = os.path.dirname(__file__)
 calendar_image_path = os.path.join(current_path, "images", "calendar.png")
@@ -94,9 +98,14 @@ while True:
     if not static_info_drawn:
         Info.draw_static_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height)
         static_info_drawn = True
-    Info.draw_dynamic_info(screen, window_width, window_height, info_zone_height)
     draw_desk(screen, info_zone_height, window_width, desk_zone_height, testhwk)
-
+    current_time = pygame.time.get_ticks()
+    if current_time - last_time >= 333.3:
+        time += 10
+        last_time = current_time
+        if time > 1440:
+            time = 0
+        Info.draw_dynamic_info(screen, window_width, window_height, info_zone_height, time)
     # Render FPS counter
     fps = clock.get_fps()
     fps_text = font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color
