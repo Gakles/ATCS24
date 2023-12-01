@@ -54,7 +54,6 @@ def draw_dynamic_info(screen, window_width, window_height, info_zone_height, tim
     
     # Create a string in the format "hh:mm AM/PM"
     time_string = f"{hours:02d}:{minutes:02d} {am_pm}"
-    print(time_string)
     font = pygame.font.Font(None, 36)
     text = font.render(time_string, True, (200, 100, 200))
     text_rect = text.get_rect(center=(window_width // 2, info_zone_height // 4))
