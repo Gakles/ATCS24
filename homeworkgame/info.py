@@ -1,7 +1,7 @@
 import pygame
 import os
 
-def draw_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height):
+def draw_static_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height):
     # Draw info zone
     pygame.draw.rect(screen, (192, 192, 192), (0, 0, window_width, info_zone_height))  # Light gray info zone
 
@@ -42,3 +42,10 @@ def draw_info(screen, window_width, window_height, info_zone_height, calendar_im
     # Draw pillow image to fill the empty space between the 3 boxes on the 4th row and the bottom of the info zone
     pillow_rect = pillow_image.get_rect(left=2 * window_width // 3 + 3 * box_width - 4, top=info_zone_height - pillow_image.get_height() - 2)
     screen.blit(pillow_image, pillow_rect)
+
+    def draw_dynamic_info(screen, window_width, window_height, info_zone_height, time_of_day):
+        pygame.draw.rect(screen, (192, 192, 192), (0, 0, window_width/7, info_zone_height/4))
+        font = pygame.font.Font(None, 16)
+        text = font.render(time_of_day, True, (0, 0, 0))  # Black text
+        text_rect = text.get_rect(center=(window_width/2, info_zone_height/4))
+        screen.blit(text, )

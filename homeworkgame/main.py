@@ -1,7 +1,7 @@
 import pygame
 import sys
 import os
-from info import draw_info
+import info as Info
 from desk import draw_desk
 import homework
 
@@ -32,7 +32,7 @@ screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Pygame Game Loop")
 
 #homework
-testhwk = homework.Homework("minor")
+testhwk = homework.Homework("major", "English", 240, "Bibliography")
 
 # Load images
 current_path = os.path.dirname(__file__)
@@ -54,9 +54,15 @@ pillow_image = pygame.transform.scale(pillow_image, (empty_space_width, info_zon
 # Set up the clock for controlling the frame rate
 clock = pygame.time.Clock()
 
+# Set up the font for the FPS counter
+font = pygame.font.Font(None, 36)
+
 # Variables for logging keys and clicks
 keys_pressed = set()
 mouse_clicks = []
+
+# Boolean flag to check if static info has been drawn
+static_info_drawn = False
 
 # Main game loop
 while True:
@@ -78,15 +84,23 @@ while True:
     # Update game logic here
 
     # Clear the screen
-    screen.fill((200, 200, 200))  # Light gray background
+    #screen.fill((200, 200, 200))  # Light gray background
 
     # Define box_width and box_height
     box_width = schedule_width // 7
     box_height = info_zone_height // 4
 
-    draw_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height)
-
+    # Draw static info if it hasn't been drawn
+    if not static_info_drawn:
+        Info.draw_static_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height)
+        static_info_drawn = True
+    Info.draw_dynamic_info(screen, window_width, window_height, info_zone_height)
     draw_desk(screen, info_zone_height, window_width, desk_zone_height, testhwk)
+
+    # Render FPS counter
+    fps = clock.get_fps()
+    fps_text = font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color
+    screen.blit(fps_text, (window_width - 120, 20))  # Position the FPS counter in the top right corner
 
     # Update the display
     pygame.display.flip()
