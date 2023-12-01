@@ -3,6 +3,7 @@ import sys
 import os
 from info import draw_info
 from desk import draw_desk
+import homework
 
 # Initialize Pygame
 pygame.init()
@@ -29,6 +30,9 @@ schedule_height = info_zone_height
 # Set up the display
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Pygame Game Loop")
+
+#homework
+testhwk = homework.Homework("minor")
 
 # Load images
 current_path = os.path.dirname(__file__)
@@ -82,7 +86,7 @@ while True:
 
     draw_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height)
 
-    draw_desk(screen, info_zone_height, window_width, desk_zone_height)
+    draw_desk(screen, info_zone_height, window_width, desk_zone_height, testhwk)
 
     # Update the display
     pygame.display.flip()
