@@ -37,7 +37,11 @@ screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Pygame Game Loop")
 
 #homework
-testhwk = homework.Homework("major", "English", 240, "Bibliography")
+testhwk1 = homework.Homework("major", "English", 240, "Bibliography")
+testhwk2 = homework.Homework("minor", "Bio", 150, "Mitochondria MCQ")
+testhwk3 = homework.Homework("minor", "English", 50, "Freewrite")
+testhwk4 = homework.Homework("minor", "Math", 150, "Online Quiz")
+activehwk = testhwk1
 
 #time
 time = 0
@@ -65,7 +69,7 @@ static_info_drawn = False
 button_drawn = False
 
 #Game tracker variables
-homeworkQ = None
+homeworkQ = [testhwk1, testhwk2, testhwk3, testhwk4]
 
 # Main game loop
 while True:
@@ -101,7 +105,7 @@ while True:
         Info.draw_dynamic_info("drawbutton", screen, window_width, window_height, info_zone_height, time, button_image)
         button_drawn = True
     
-    draw_desk(screen, info_zone_height, window_width, desk_zone_height, testhwk)
+    draw_desk(screen, info_zone_height, window_width, desk_zone_height, activehwk, homeworkQ)
     current_time = pygame.time.get_ticks()
     if current_time - last_time >= 333.3:
         time += 10
