@@ -52,17 +52,44 @@ class deskdrawer:
             hwkcount += 1
             hwk.queueclickrect = clickrect
     def drawteacher_zone(self, teachers):
-        pygame.draw.rect(self.screen, (220,150,65), (4.025*self.fifth_width, 1.025*self.info_zone_height, .95*self.fifth_width, 0.975*self.desk_zone_height))
-        pygame.draw.rect(self.screen, (190,140,45), (4*self.fifth_width, self.info_zone_height, self.fifth_width, .15*self.desk_zone_height))
+        pygame.draw.rect(self.screen, (220, 150, 65), (4.025 * self.fifth_width, 1.025 * self.info_zone_height, 0.95 * self.fifth_width, 0.975 * self.desk_zone_height))
+        pygame.draw.rect(self.screen, (190, 140, 45), (4 * self.fifth_width, self.info_zone_height, self.fifth_width, 0.15 * self.desk_zone_height))
         teacher_count = 0
         font = pygame.font.Font(None, 16)
+
         for teacher in teachers:
-            teacher.clickrect = pygame.Rect(4.05*self.fifth_width + (.4625*self.fifth_width*(teacher_count%2)), self.info_zone_height + .15*self.desk_zone_height + (.15*self.desk_zone_height*(teacher_count//2)), .4375*self.fifth_width, .15*self.desk_zone_height)
+            teacher.clickrect = pygame.Rect(4.05 * self.fifth_width + (0.4625 * self.fifth_width * (teacher_count % 2)),
+                                            self.info_zone_height + 0.15 * self.desk_zone_height + (0.15 * self.desk_zone_height * (teacher_count // 2)),
+                                            0.4375 * self.fifth_width, 0.15 * self.desk_zone_height)
+
             pygame.draw.rect(self.screen, teacher.rgb, teacher.clickrect)
-            image_rect = teacher.image.get_rect(center=(teacher.clickrect.center))
-            self.screen.blit(teacher.image, image_rect)
+
+            # Scale teacher.image to 2/3 the size of teacher.clickrect
+            scaled_width = int(2 / 3 * teacher.clickrect.width)
+            scaled_height = int(2 / 3 * teacher.clickrect.height)
+            scaled_image = pygame.transform.scale(teacher.image, (scaled_width, scaled_height))
+
+            # Get the center coordinates of the clickrect
+            center_x, center_y = teacher.clickrect.center
+
+            # Draw the scaled image at the center of the clickrect
+            image_rect = scaled_image.get_rect(center=(center_x, center_y))
+            self.screen.blit(scaled_image, image_rect)
+
+            # Create a text surface with teacher.name and subject
+            textsubject_surface = font.render(teacher.subject, True, (255, 255, 255))  # Assuming white text
+            textsubject_rect = textsubject_surface.get_rect(center=(center_x, center_y + 0.5 * scaled_height + 5))  # Adjust Y-coordinate for positioning
+            textname_surface = font.render(teacher.name, True, (255, 255, 255))  # Assuming white text
+            textname_rect = textname_surface.get_rect(center=(center_x, center_y - 0.5 * scaled_height - 5))
+
+
+            # Draw the text surface below the top of the clickrect
+            self.screen.blit(textsubject_surface, textsubject_rect)
+            self.screen.blit(textname_surface, textname_rect)
 
             teacher_count += 1
+
+
     def draw_desk(self, activehomework, homeworkQ, teachers):
         #Left 1/5  brown rect
         pygame.draw.rect(self.screen, (139, 69, 19), (0, self.info_zone_height, self.fifth_width, self.desk_zone_height))
