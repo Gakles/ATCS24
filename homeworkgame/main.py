@@ -5,6 +5,7 @@ import info as Info
 import desk
 import homework
 from helpers import*
+import teacher
 
 # Initialize Pygame
 pygame.init()
@@ -43,9 +44,13 @@ testhwk3 = homework.Homework("minor", "English", 50, "Freewrite")
 testhwk4 = homework.Homework("minor", "Math", 150, "Online Quiz")
 activehwk = testhwk1
 
+#teachers
+teacher1 = teacher.Teacher("Monica", "English")
+
 #time
 time = 0
 last_time  = 0
+day = 0
 
 # Load images
 current_path = os.path.dirname(__file__)
@@ -71,6 +76,7 @@ wholedeskdrawn = False
 
 #Game tracker variables
 homeworkQ = [testhwk1, testhwk2, testhwk3, testhwk4]
+teachers = [teacher1]
 
 #Desk graphics object
 deskobj = desk.deskdrawer(screen, info_zone_height, window_width, window_height-info_zone_height)
@@ -101,9 +107,6 @@ while True:
                         print(hwk.title)
     # Update game logic here
 
-    # Clear the screen
-    #screen.fill((200, 200, 200))  # Light gray background
-
     # Define box_width and box_height
     box_width = schedule_width // 7
     box_height = info_zone_height // 4
@@ -116,13 +119,14 @@ while True:
         Info.draw_dynamic_info("drawbutton", screen, window_width, window_height, info_zone_height, time, button_image)
         button_drawn = True
     if not wholedeskdrawn:
-        deskobj.draw_desk(activehwk, homeworkQ)
+        deskobj.draw_desk(activehwk, homeworkQ, teachers)
         wholedeskdrawn = True
     current_time = pygame.time.get_ticks()
     if current_time - last_time >= 333.3:
         time += 10
         last_time = current_time
         if time > 1440:
+            day += 1
             time = 0
         Info.draw_dynamic_info("timeupdate", screen, window_width, window_height, info_zone_height, time, button_image)
     # Render FPS counter

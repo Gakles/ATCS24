@@ -41,7 +41,7 @@ class deskdrawer:
         hwkcount = 0
         font = pygame.font.Font(None, 16)
         for hwk in homeworkQ:
-            clickrect = pygame.Rect(self.fifth_width + .025*self.fifth_width, self.info_zone_height + .025*self.info_zone_height + (hwkcount*(.125*self.info_zone_height)), 0.4*self.fifth_width - .05*self.fifth_width, .1*self.info_zone_height)
+            clickrect = pygame.Rect(self.fifth_width + .025*self.fifth_width, 1.025*self.info_zone_height + (hwkcount*(.125*self.info_zone_height)), 0.4*self.fifth_width - .05*self.fifth_width, .1*self.info_zone_height)
             if not hwk.active:
                 pygame.draw.rect(self.screen, (0, 200,255), clickrect)
             else:
@@ -51,9 +51,15 @@ class deskdrawer:
             self.screen.blit(text_surface, text_rect)
             hwkcount += 1
             hwk.queueclickrect = clickrect
-
-
-    def draw_desk(self, activehomework, homeworkQ):
+    def drawteacher_zone(self, teachers):
+        pygame.draw.rect(self.screen, (220,150,65), (4.025*self.fifth_width, 1.025*self.info_zone_height, .95*self.fifth_width, 0.975*self.desk_zone_height))
+        pygame.draw.rect(self.screen, (190,140,45), (4*self.fifth_width, self.info_zone_height, self.fifth_width, .15*self.desk_zone_height))
+        teacher_count = 0
+        font = pygame.font.Font(None, 16)
+        for teacher in teachers:
+            clickrect = pygame.Rect(4*self.fifth_width, )
+        
+    def draw_desk(self, activehomework, homeworkQ, teachers):
         #Left 1/5  brown rect
         pygame.draw.rect(self.screen, (139, 69, 19), (0, self.info_zone_height, self.fifth_width, self.desk_zone_height))
         #load correct wk image
@@ -84,5 +90,7 @@ class deskdrawer:
         #Make the homework queue
         self.draw_homeworkQ_zone(homeworkQ)
         
-        # Draw right 1/5 red zone
+        #Draw right 1/5 red zone
         pygame.draw.rect(self.screen, (255, 0, 0), (self.fifth_width * 4, self.info_zone_height, self.fifth_width, self.desk_zone_height))
+        #make teachers
+        self.drawteacher_zone(teachers)
