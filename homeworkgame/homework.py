@@ -7,3 +7,5 @@ class Homework:
         self.totalwork = totalwork
         self.timespent = 0
         self.title = assignment_title
+        self.queueclickrect = None
+        self.active = False
