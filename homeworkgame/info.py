@@ -55,17 +55,17 @@ def draw_dynamic_info(screen, window_width, window_height, info_zone_height, tim
     # Create a string in the format "hh:mm AM/PM"
     time_string = f"{hours:02d}:{minutes:02d}"
     ampm_string = f"{am_pm}"
-    font = pygame.font.Font(None, 36)
+    font = pygame.font.Font(None, 30)
     num_text = font.render(time_string, True, (200, 100, 200))
     day_cycle_text = font.render(ampm_string, True, (200, 100, 200))
     
     # Fixed width for the rectangle (1/9 of the total screen width)
-    rect_width = window_width // 9
+    rect_width = window_width // 14
     rect_height = 30  # Adjust the height as needed
     
     # Get the bottom right corner of the existing text_rect
-    num_text_rect = num_text.get_rect(topleft=((2*window_width/3) - 3*rect_width/4, info_zone_height-7*rect_height/8))
-    day_cycle_text_rect = num_text.get_rect(topleft=((2*window_width/3) - 2*rect_width/7, info_zone_height-7*rect_height/8))
+    num_text_rect = num_text.get_rect(topleft=((2*window_width/3) - 15*rect_width/16, info_zone_height-7*rect_height/8))
+    day_cycle_text_rect = num_text.get_rect(topleft=((2*window_width/3) - .35*rect_width, info_zone_height-7*rect_height/8))
 
     # Adjust the position to place the rectangle at the bottom right corner
     rect_position = (2*window_width/3 - rect_width, info_zone_height - rect_height)
