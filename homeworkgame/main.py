@@ -64,6 +64,9 @@ mouse_clicks = []
 static_info_drawn = False
 button_drawn = False
 
+#Game tracker variables
+homeworkQ = None
+
 # Main game loop
 while True:
     for event in pygame.event.get():
@@ -97,6 +100,7 @@ while True:
     if not button_drawn:
         Info.draw_dynamic_info("drawbutton", screen, window_width, window_height, info_zone_height, time, button_image)
         button_drawn = True
+    
     draw_desk(screen, info_zone_height, window_width, desk_zone_height, testhwk)
     current_time = pygame.time.get_ticks()
     if current_time - last_time >= 333.3:
