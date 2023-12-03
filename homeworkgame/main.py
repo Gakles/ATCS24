@@ -27,6 +27,9 @@ static_image_height = info_zone_height
 schedule_width = window_width // 3
 schedule_height = info_zone_height
 
+button_width = window_width//12
+button_height = window_height//15
+
 # Set up the display
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Pygame Game Loop")
@@ -43,6 +46,7 @@ current_path = os.path.dirname(__file__)
 calendar_image_path = os.path.join(current_path, "images", "calendar.png")
 static_image_path = os.path.join(current_path, "images", "desk.png")
 pillow_image_path = os.path.join(current_path, "images", "pillow.png")
+button_image_path = os.path.join(current_path, "images", "button.png")
 
 calendar_image = pygame.image.load(calendar_image_path)
 calendar_image = pygame.transform.scale(calendar_image, (calendar_width, calendar_height))
@@ -54,6 +58,9 @@ pillow_image = pygame.image.load(pillow_image_path)
 # Resize the pillow image to fit the empty space
 empty_space_width = window_width - (2 * window_width // 3 + 3 * schedule_width // 7)
 pillow_image = pygame.transform.scale(pillow_image, (empty_space_width, info_zone_height // 4))
+
+button_image = pygame.image.load(button_image_path)
+button_image = pygame.transform.scale(button_image, (button_width, button_height))
 
 # Set up the clock for controlling the frame rate
 clock = pygame.time.Clock()

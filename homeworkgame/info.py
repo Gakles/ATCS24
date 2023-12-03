@@ -53,11 +53,25 @@ def draw_dynamic_info(screen, window_width, window_height, info_zone_height, tim
     hours = hours % 12 or 12  # Make 0 or 12 display as 12
     
     # Create a string in the format "hh:mm AM/PM"
-    time_string = f"{hours:02d}:{minutes:02d} {am_pm}"
+    time_string = f"{hours:02d}:{minutes:02d}"
+    ampm_string = f"{am_pm}"
     font = pygame.font.Font(None, 36)
-    text = font.render(time_string, True, (200, 100, 200))
-    text_rect = text.get_rect(center=(window_width // 2, info_zone_height // 4))
-    pygame.draw.rect(screen, (192, 192, 192), text_rect)
+    num_text = font.render(time_string, True, (200, 100, 200))
+    day_cycle_text = font.render(ampm_string, True, (200, 100, 200))
     
-    screen.blit(text, text_rect)
+    # Fixed width for the rectangle (1/9 of the total screen width)
+    rect_width = window_width // 9
+    rect_height = 30  # Adjust the height as needed
+    
+    # Get the bottom right corner of the existing text_rect
+    num_text_rect = num_text.get_rect(topleft=((2*window_width/3) - 3*rect_width/4, info_zone_height-7*rect_height/8))
+    day_cycle_text_rect = num_text.get_rect(topleft=((2*window_width/3) - 2*rect_width/7, info_zone_height-7*rect_height/8))
 
+    # Adjust the position to place the rectangle at the bottom right corner
+    rect_position = (2*window_width/3 - rect_width, info_zone_height - rect_height)
+    
+    # Draw the rectangle independently
+    pygame.draw.rect(screen, (192, 192, 192), (*rect_position, rect_width, rect_height))
+    
+    screen.blit(num_text, num_text_rect)
+    screen.blit(day_cycle_text, day_cycle_text_rect)
