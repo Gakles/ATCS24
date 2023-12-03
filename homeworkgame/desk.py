@@ -57,8 +57,12 @@ class deskdrawer:
         teacher_count = 0
         font = pygame.font.Font(None, 16)
         for teacher in teachers:
-            clickrect = pygame.Rect(4*self.fifth_width, )
-        
+            teacher.clickrect = pygame.Rect(4.05*self.fifth_width + (.4625*self.fifth_width*(teacher_count%2)), self.info_zone_height + .15*self.desk_zone_height + (.15*self.desk_zone_height*(teacher_count//2)), .4375*self.fifth_width, .15*self.desk_zone_height)
+            pygame.draw.rect(self.screen, teacher.rgb, teacher.clickrect)
+            image_rect = teacher.image.get_rect(center=(teacher.clickrect.center))
+            self.screen.blit(teacher.image, image_rect)
+
+            teacher_count += 1
     def draw_desk(self, activehomework, homeworkQ, teachers):
         #Left 1/5  brown rect
         pygame.draw.rect(self.screen, (139, 69, 19), (0, self.info_zone_height, self.fifth_width, self.desk_zone_height))

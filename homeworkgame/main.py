@@ -39,13 +39,17 @@ pygame.display.set_caption("Pygame Game Loop")
 
 #homework
 testhwk1 = homework.Homework("major", "English", 240, "Bibliography")
-testhwk2 = homework.Homework("minor", "Bio", 150, "Mitochondria MCQ")
+testhwk2 = homework.Homework("minor", "Biology", 150, "Mitochondria MCQ")
 testhwk3 = homework.Homework("minor", "English", 50, "Freewrite")
 testhwk4 = homework.Homework("minor", "Math", 150, "Online Quiz")
 activehwk = testhwk1
 
 #teachers
 teacher1 = teacher.Teacher("Monica", "English")
+teacher2 = teacher.Teacher("Manuel", "Math")
+teacher3 = teacher.Teacher("Marzano", "Biology")
+teacher4 = teacher.Teacher("Mack", "Comp. Sci")
+teacher5 = teacher.Teacher("Mcdougal", "History")
 
 #time
 time = 0
@@ -76,7 +80,7 @@ wholedeskdrawn = False
 
 #Game tracker variables
 homeworkQ = [testhwk1, testhwk2, testhwk3, testhwk4]
-teachers = [teacher1]
+teachers = [teacher1, teacher2, teacher3, teacher4, teacher5]
 
 #Desk graphics object
 deskobj = desk.deskdrawer(screen, info_zone_height, window_width, window_height-info_zone_height)

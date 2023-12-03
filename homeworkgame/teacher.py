@@ -8,6 +8,8 @@ class Teacher:
         self.subject = subject
         self.image = self.get_rand_image()
         self.time_since_last_hwk = 0
+        self.rgb = (self.rand_rgb())
+        self.clickrect = None
 
     def get_rand_image(self):
         script_directory = os.path.dirname(__file__)
@@ -19,3 +21,8 @@ class Teacher:
         image_path = os.path.join(folder_path, random_image)
         self.image = pygame.image.load(image_path)
         return pygame.transform.scale(self.image, (128, 128))
+    def rand_rgb(self):
+        r = random.randint(0,255)
+        g = random.randint(0,255)
+        b = random.randint(0,255)
+        return r,g,b
