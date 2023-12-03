@@ -2,7 +2,7 @@ import pygame
 import sys
 import os
 import info as Info
-from desk import draw_desk
+import desk
 import homework
 from helpers import*
 
@@ -67,9 +67,13 @@ mouse_clicks = []
 # Boolean flags for drawing stuff
 static_info_drawn = False
 button_drawn = False
+wholedeskdrawn = False
 
 #Game tracker variables
 homeworkQ = [testhwk1, testhwk2, testhwk3, testhwk4]
+
+#Desk graphics object
+deskobj = desk.deskdrawer(screen, info_zone_height, window_width, window_height-info_zone_height)
 
 # Main game loop
 while True:
@@ -87,7 +91,14 @@ while True:
         # Log mouse clicks
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_clicks.append(event.pos)
-
+            for click in mouse_clicks:
+                for hwk in homeworkQ:
+                    if hwk.queueclickrect.collidepoint(click):
+                        activehwk.active = False
+                        activehwk = hwk
+                        activehwk.active = True
+                        wholedeskdrawn = False
+                        print(hwk.title)
     # Update game logic here
 
     # Clear the screen
@@ -104,8 +115,9 @@ while True:
     if not button_drawn:
         Info.draw_dynamic_info("drawbutton", screen, window_width, window_height, info_zone_height, time, button_image)
         button_drawn = True
-    
-    draw_desk(screen, info_zone_height, window_width, desk_zone_height, activehwk, homeworkQ)
+    if not wholedeskdrawn:
+        deskobj.draw_desk(activehwk, homeworkQ)
+        wholedeskdrawn = True
     current_time = pygame.time.get_ticks()
     if current_time - last_time >= 333.3:
         time += 10
