@@ -4,11 +4,11 @@ import os
 import info as Info
 from desk import draw_desk
 import homework
+from helpers import*
 
 # Initialize Pygame
 pygame.init()
 
-# Set up the window size and zones
 window_width = 1400
 window_height = 750
 window_size = (window_width, window_height)
@@ -27,8 +27,10 @@ static_image_height = info_zone_height
 schedule_width = window_width // 3
 schedule_height = info_zone_height
 
-button_width = window_width//12
-button_height = window_height//15
+button_width = window_width // 24
+button_height = 30
+
+empty_space_width = window_width - (2 * window_width // 3 + 3 * schedule_width // 7)
 
 # Set up the display
 screen = pygame.display.set_mode(window_size)
@@ -43,24 +45,10 @@ last_time  = 0
 
 # Load images
 current_path = os.path.dirname(__file__)
-calendar_image_path = os.path.join(current_path, "images", "calendar.png")
-static_image_path = os.path.join(current_path, "images", "desk.png")
-pillow_image_path = os.path.join(current_path, "images", "pillow.png")
-button_image_path = os.path.join(current_path, "images", "button.png")
-
-calendar_image = pygame.image.load(calendar_image_path)
-calendar_image = pygame.transform.scale(calendar_image, (calendar_width, calendar_height))
-
-static_image = pygame.image.load(static_image_path)
-static_image = pygame.transform.scale(static_image, (static_image_width, static_image_height))
-
-pillow_image = pygame.image.load(pillow_image_path)
-# Resize the pillow image to fit the empty space
-empty_space_width = window_width - (2 * window_width // 3 + 3 * schedule_width // 7)
-pillow_image = pygame.transform.scale(pillow_image, (empty_space_width, info_zone_height // 4))
-
-button_image = pygame.image.load(button_image_path)
-button_image = pygame.transform.scale(button_image, (button_width, button_height))
+calendar_image = Image(os.path.join(current_path, "images", "calendar.png"), calendar_width, calendar_height, (0, 0))
+static_image = Image(os.path.join(current_path, "images", "desk.png"), static_image_width, static_image_height, (calendar_width, 0))
+pillow_image = Image(os.path.join(current_path, "images", "pillow.png"), empty_space_width, info_zone_height // 4, (2 * window_width // 3 + 3 * schedule_width // 7, .75*info_zone_height))
+button_image = Image(os.path.join(current_path, "images", "button.png"), button_width, button_height, (.554*window_width, info_zone_height-button_height))
 
 # Set up the clock for controlling the frame rate
 clock = pygame.time.Clock()
@@ -72,8 +60,9 @@ font = pygame.font.Font(None, 36)
 keys_pressed = set()
 mouse_clicks = []
 
-# Boolean flag to check if static info has been drawn
+# Boolean flags for drawing stuff
 static_info_drawn = False
+button_drawn = False
 
 # Main game loop
 while True:
@@ -105,6 +94,9 @@ while True:
     if not static_info_drawn:
         Info.draw_static_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height)
         static_info_drawn = True
+    if not button_drawn:
+        Info.draw_dynamic_info("drawbutton", screen, window_width, window_height, info_zone_height, time, button_image)
+        button_drawn = True
     draw_desk(screen, info_zone_height, window_width, desk_zone_height, testhwk)
     current_time = pygame.time.get_ticks()
     if current_time - last_time >= 333.3:
@@ -112,7 +104,7 @@ while True:
         last_time = current_time
         if time > 1440:
             time = 0
-        Info.draw_dynamic_info(screen, window_width, window_height, info_zone_height, time)
+        Info.draw_dynamic_info("timeupdate", screen, window_width, window_height, info_zone_height, time, button_image)
     # Render FPS counter
     fps = clock.get_fps()
     fps_text = font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color
