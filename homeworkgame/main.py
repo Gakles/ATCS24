@@ -6,6 +6,7 @@ import desk
 import homework
 from helpers import*
 import teacher
+import gameinfo
 
 # Initialize Pygame
 pygame.init()
@@ -84,6 +85,9 @@ teachers = [teacher1, teacher2, teacher3, teacher4, teacher5]
 
 #Desk graphics object
 deskobj = desk.deskdrawer(screen, info_zone_height, window_width, window_height-info_zone_height)
+
+#Gameinfo Object
+game = gameinfo.Game()
 
 # Main game loop
 while True:
