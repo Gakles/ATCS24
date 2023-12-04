@@ -109,6 +109,10 @@ while True:
                         activehwk.active = True
                         wholedeskdrawn = False
                         print(hwk.title)
+                for teacher in teachers:
+                    if teacher.clickrect.collidepoint(click):
+                        teacher.rgb = (100,100,100)
+                        wholedeskdrawn = False
     # Update game logic here
 
     # Define box_width and box_height

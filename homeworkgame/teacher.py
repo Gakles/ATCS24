@@ -8,8 +8,10 @@ class Teacher:
         self.subject = subject
         self.image = self.get_rand_image()
         self.time_since_last_hwk = 0
-        self.rgb = (self.rand_rgb())
+        self.randrgb = (self.rand_rgb())
+        self.rgb = self.randrgb
         self.clickrect = None
+        self.newassignment = True
 
     def get_rand_image(self):
         script_directory = os.path.dirname(__file__)

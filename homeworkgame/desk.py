@@ -62,6 +62,9 @@ class deskdrawer:
                                             self.info_zone_height + 0.15 * self.desk_zone_height + (0.15 * self.desk_zone_height * (teacher_count // 2)),
                                             0.4375 * self.fifth_width, 0.15 * self.desk_zone_height)
 
+            # Check if newassignment is True and draw a blue border  # Blue border
+            if teacher.newassignment:
+                pygame.draw.rect(self.screen, (0, 0, 255), teacher.clickrect, 20)
             pygame.draw.rect(self.screen, teacher.rgb, teacher.clickrect)
 
             # Scale teacher.image to 2/3 the size of teacher.clickrect
@@ -82,12 +85,12 @@ class deskdrawer:
             textname_surface = font.render(teacher.name, True, (255, 255, 255))  # Assuming white text
             textname_rect = textname_surface.get_rect(center=(center_x, center_y - 0.5 * scaled_height - 5))
 
-
             # Draw the text surface below the top of the clickrect
             self.screen.blit(textsubject_surface, textsubject_rect)
             self.screen.blit(textname_surface, textname_rect)
 
             teacher_count += 1
+
 
 
     def draw_desk(self, activehomework, homeworkQ, teachers):
