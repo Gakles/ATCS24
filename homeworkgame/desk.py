@@ -46,11 +46,38 @@ class deskdrawer:
                 pygame.draw.rect(self.screen, (0, 200,255), clickrect)
             else:
                 pygame.draw.rect(self.screen, (200, 0,255), clickrect)
+            if hwk.finished:
+                pygame.draw.rect(self.screen, (255, 200,0), clickrect)
             text_surface = font.render(hwk.title, True, (0,0,0))
             text_rect = text_surface.get_rect(center=(clickrect.center))
             self.screen.blit(text_surface, text_rect)
             hwkcount += 1
             hwk.queueclickrect = clickrect
+    def draw_active_hwk(self, activehomework):
+        pygame.draw.rect(self.screen, (119, 39, 9), (0.025*self.fifth_width, 1.05*self.info_zone_height, .95*self.fifth_width, .95*self.desk_zone_height))
+        homework_image = self.load_homework_image(activehomework.size, target_height=self.desk_zone_height // 2)
+        #size and blit the image
+        if homework_image:
+            image_width, image_height = homework_image.get_size()
+            image_x = (self.fifth_width - image_width) // 2
+            image_y = (self.desk_zone_height // 2 - image_height) // 2 + self.info_zone_height
+            self.screen.blit(homework_image, (image_x, image_y))
+        #Additional information for the selected homework
+        font = pygame.font.Font(None, 36)
+        lines = [
+            f"Size: {activehomework.size}",
+            f"From Class: {activehomework.assignment_from_class}",
+            f"Total Work: {activehomework.totalwork}",
+            f"Time Spent: {activehomework.timespent}",
+            f"Title: {activehomework.title}"
+        ]
+        y_offset = self.info_zone_height + self.desk_zone_height // 2 + 10  # Initial y-offset
+        for line in lines:
+            text_surface = font.render(line, True, (255, 255, 255))
+            text_rect = text_surface.get_rect(center=(self.fifth_width // 2, y_offset))
+            self.screen.blit(text_surface, text_rect)
+            y_offset += 40  # Adjust this value to control the spacing between lines
+
     def drawteacher_zone(self, teachers):
         pygame.draw.rect(self.screen, (220, 150, 65), (4.025 * self.fifth_width, 1.025 * self.info_zone_height, 0.95 * self.fifth_width, 0.975 * self.desk_zone_height))
         pygame.draw.rect(self.screen, (190, 140, 45), (4 * self.fifth_width, self.info_zone_height, self.fifth_width, 0.15 * self.desk_zone_height))
@@ -96,29 +123,8 @@ class deskdrawer:
     def draw_desk(self, activehomework, homeworkQ, teachers):
         #Left 1/5  brown rect
         pygame.draw.rect(self.screen, (139, 69, 19), (0, self.info_zone_height, self.fifth_width, self.desk_zone_height))
-        #load correct wk image
-        homework_image = self.load_homework_image(activehomework.size, target_height=self.desk_zone_height // 2)
-        #size and blit the image
-        if homework_image:
-            image_width, image_height = homework_image.get_size()
-            image_x = (self.fifth_width - image_width) // 2
-            image_y = (self.desk_zone_height // 2 - image_height) // 2 + self.info_zone_height
-            self.screen.blit(homework_image, (image_x, image_y))
-        #Additional information for the selected homework
-        font = pygame.font.Font(None, 36)
-        lines = [
-            f"Size: {activehomework.size}",
-            f"From Class: {activehomework.assignment_from_class}",
-            f"Total Work: {activehomework.totalwork}",
-            f"Time Spent: {activehomework.timespent}",
-            f"Title: {activehomework.title}"
-        ]
-        y_offset = self.info_zone_height + self.desk_zone_height // 2 + 10  # Initial y-offset
-        for line in lines:
-            text_surface = font.render(line, True, (255, 255, 255))
-            text_rect = text_surface.get_rect(center=(self.fifth_width // 2, y_offset))
-            self.screen.blit(text_surface, text_rect)
-            y_offset += 40  # Adjust this value to control the spacing between lines
+        #Draw the active homework
+        self.draw_active_hwk(activehomework)
         #make the middle, blue zone
         pygame.draw.rect(self.screen, (0, 0, 255), (self.fifth_width, self.info_zone_height, self.fifth_width * 3, self.desk_zone_height))
         #Make the homework queue

@@ -7,6 +7,7 @@ import homework
 from helpers import*
 import teacher
 import gameinfo
+import character
 
 # Initialize Pygame
 pygame.init()
@@ -43,7 +44,6 @@ testhwk1 = homework.Homework("major", "English", 240, "Bibliography")
 testhwk2 = homework.Homework("minor", "Biology", 150, "Mitochondria MCQ")
 testhwk3 = homework.Homework("minor", "English", 50, "Freewrite")
 testhwk4 = homework.Homework("minor", "Math", 150, "Online Quiz")
-activehwk = testhwk1
 
 #teachers
 teacher1 = teacher.Teacher("Monica", "English")
@@ -86,9 +86,11 @@ teachers = [teacher1, teacher2, teacher3, teacher4, teacher5]
 #Desk graphics object
 deskobj = desk.deskdrawer(screen, info_zone_height, window_width, window_height-info_zone_height)
 
+#make character
+player = character.Character("John")
 #Gameinfo Object
-game = gameinfo.Game()
-
+game = gameinfo.Game(homeworkQ, teachers, player)
+game.activehwk = testhwk1
 # Main game loop
 while True:
     for event in pygame.event.get():
@@ -106,14 +108,11 @@ while True:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_clicks.append(event.pos)
             for click in mouse_clicks:
-                for hwk in homeworkQ:
+                for hwk in game.homeworkQ:
                     if hwk.queueclickrect.collidepoint(click):
-                        activehwk.active = False
-                        activehwk = hwk
-                        activehwk.active = True
+                        game.changeactivehwk(hwk)
                         wholedeskdrawn = False
-                        print(hwk.title)
-                for teacher in teachers:
+                for teacher in game.teachers:
                     if teacher.clickrect.collidepoint(click):
                         teacher.rgb = (100,100,100)
                         wholedeskdrawn = False
@@ -131,7 +130,7 @@ while True:
         Info.draw_dynamic_info("drawbutton", screen, window_width, window_height, info_zone_height, time, button_image)
         button_drawn = True
     if not wholedeskdrawn:
-        deskobj.draw_desk(activehwk, homeworkQ, teachers)
+        deskobj.draw_desk(game.activehwk, game.homeworkQ, game.teachers)
         wholedeskdrawn = True
     current_time = pygame.time.get_ticks()
     if current_time - last_time >= 333.3:
@@ -141,6 +140,11 @@ while True:
             day += 1
             time = 0
         Info.draw_dynamic_info("timeupdate", screen, window_width, window_height, info_zone_height, time, button_image)
+        game.update()
+        if game.redrawhomework:
+            deskobj.draw_homeworkQ_zone(game.homeworkQ)
+            deskobj.draw_active_hwk(game.activehwk)
+            game.redrawhomework = False
     # Render FPS counter
     fps = clock.get_fps()
     fps_text = font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color
