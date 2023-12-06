@@ -12,6 +12,12 @@ class Teacher:
         self.rgb = self.randrgb
         self.clickrect = None
         self.newassignment = True
+        self.current_state = "calm"
+        self.transitions = {
+            ("chill", "input"): (self.transition_to_calm, "calm"),
+            ("calm", "input"): (self.transition_to_out_for_blood, "out_for_blood"),
+            ("out for blood", "input"): (self.transition_to_chill, "chill"),
+        }
 
     def get_rand_image(self):
         script_directory = os.path.dirname(__file__)
@@ -28,4 +34,16 @@ class Teacher:
         g = random.randint(0,255)
         b = random.randint(0,255)
         return r,g,b
-    
+    def transition(self, input):
+        key =  (self.current_state, input)
+        if key in self.transitions:
+            result = self.transitions[key]
+            action = result[0]
+            action()
+            self.current_state = result[1]
+    def transition_to_calm(self):
+        print("I'm teacher " + self.name + " and now I'm calm")
+    def transition_to_out_for_blood(self):
+        print("I'm teacher " + self.name + " and now I'm out for blood!")
+    def transition_to_chill(self):
+        print("I'm teacher " + self.name + " and now I'm chill")

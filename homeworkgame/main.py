@@ -41,9 +41,9 @@ pygame.display.set_caption("Pygame Game Loop")
 
 #homework
 testhwk1 = homework.Homework("major", "English", 240, "Bibliography")
-testhwk2 = homework.Homework("minor", "Biology", 150, "Mitochondria MCQ")
+testhwk2 = homework.Homework("minor", "Biology", 1050, "Mitochondria MCQ")
 testhwk3 = homework.Homework("minor", "English", 50, "Freewrite")
-testhwk4 = homework.Homework("minor", "Math", 150, "Online Quiz")
+testhwk4 = homework.Homework("minor", "Math", 550, "Online Quiz")
 
 #teachers
 teacher1 = teacher.Teacher("Monica", "English")
@@ -74,10 +74,6 @@ font = pygame.font.Font(None, 36)
 keys_pressed = set()
 mouse_clicks = []
 
-# Boolean flags for drawing stuff
-static_info_drawn = False
-button_drawn = False
-wholedeskdrawn = False
 
 #Game tracker variables
 homeworkQ = [testhwk1, testhwk2, testhwk3, testhwk4]
@@ -86,14 +82,38 @@ teachers = [teacher1, teacher2, teacher3, teacher4, teacher5]
 #Desk graphics object
 deskobj = desk.deskdrawer(screen, info_zone_height, window_width, window_height-info_zone_height)
 
+#Mouse event handler
+def handle_mouse_click(event, game):
+    mouse_clicks.append(event.pos)
+    for click in mouse_clicks:
+        for hwk in game.homeworkQ:
+            if hwk.queueclickrect.collidepoint(click):
+                    print("clicked on " + hwk.title)
+                    if not hwk.finished and not hwk.active:
+                        game.changeactivehwk(hwk)
+                        game.wholedeskdrawn = False
+                    elif hwk.finished:
+                        game.homeworkQ.remove(hwk)
+                        game.wholedeskdrawn = False
+            for teacher in game.teachers:
+                if teacher.clickrect.collidepoint(click):
+                    teacher.rgb = (100,100,100)
+                    game.wholedeskdrawn = False
+
 #make character
 player = character.Character("John")
 #Gameinfo Object
 game = gameinfo.Game(homeworkQ, teachers, player)
 game.activehwk = testhwk1
 game.activehwk.active = True
+# Boolean flags for drawing stuff
+game.static_info_drawn = False
+game.button_drawn = False
+game.wholedeskdrawn = False
 # Main game loop
 while True:
+    mouse_clicks = []
+    keys_pressed = set()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -107,20 +127,11 @@ while True:
 
         # Log mouse clicks
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_clicks.append(event.pos)
-            for click in mouse_clicks:
-                for hwk in game.homeworkQ:
-                    if hwk.queueclickrect.collidepoint(click):
-                        if not hwk.finished and not hwk.active:
-                            game.changeactivehwk(hwk)
-                            wholedeskdrawn = False
-                        elif hwk.finished:
-                            game.homeworkQ.remove(hwk)
-                            wholedeskdrawn = False
-                for teacher in game.teachers:
-                    if teacher.clickrect.collidepoint(click):
-                        teacher.rgb = (100,100,100)
-                        wholedeskdrawn = False
+            appendstr = ""
+            for hwk in game.homeworkQ:
+                appendstr += hwk.title + " "
+            print(appendstr + "<-Thats the queue" + str(time))
+            handle_mouse_click(event, game)
     # Update game logic here
 
     # Define box_width and box_height
@@ -128,15 +139,15 @@ while True:
     box_height = info_zone_height // 4
 
     # Draw static info if it hasn't been drawn
-    if not static_info_drawn:
+    if not game.static_info_drawn:
         Info.draw_static_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height)
-        static_info_drawn = True
-    if not button_drawn:
+        game.static_info_drawn = True
+    if not game.button_drawn:
         Info.draw_dynamic_info("drawbutton", screen, window_width, window_height, info_zone_height, time, button_image)
-        button_drawn = True
-    if not wholedeskdrawn:
+        game.button_drawn = True
+    if not game.wholedeskdrawn:
         deskobj.draw_desk(game.activehwk, game.homeworkQ, game.teachers)
-        wholedeskdrawn = True
+        game.wholedeskdrawn = True
     current_time = pygame.time.get_ticks()
     if current_time - last_time >= 33.3:
         time += 1

@@ -34,6 +34,5 @@ class Game:
                     titlestring = ""
                     for hwk in self.homeworkQ:
                         titlestring += hwk.title
-                    print(titlestring)
         #this could cause performance issues
         self.redrawhomework = True

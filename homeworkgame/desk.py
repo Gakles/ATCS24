@@ -1,4 +1,5 @@
 import pygame
+import random
 import os
 from homework import Homework  #Homework class is in a file named homework.py
 
@@ -42,6 +43,8 @@ class deskdrawer:
         font = pygame.font.Font(None, 16)
         for hwk in homeworkQ:
             clickrect = pygame.Rect(self.fifth_width + .025*self.fifth_width, 1.025*self.info_zone_height + (hwkcount*(.125*self.info_zone_height)), 0.4*self.fifth_width - .05*self.fifth_width, .1*self.info_zone_height)
+            random_rect = pygame.Rect(clickrect.right + 200, clickrect.top, 200, clickrect.height)
+            pygame.draw.rect(self.screen, hwk.rgb, random_rect)
             if not hwk.active:
                 pygame.draw.rect(self.screen, (0, 200,255), clickrect)
             else:
@@ -78,8 +81,6 @@ class deskdrawer:
                 text_rect = text_surface.get_rect(center=(self.fifth_width // 2, y_offset))
                 self.screen.blit(text_surface, text_rect)
                 y_offset += 20  # Adjust this value to control the spacing between lines
-        else:
-            print("you're done for now")
     def draw_active_hwk_progess_bar(self, activehwk):
         pygame.draw.rect(self.screen, (79,79,79), (0.025*self.fifth_width, self.info_zone_height + .8*self.desk_zone_height, .95*self.fifth_width, .075*self.desk_zone_height))
         completionpercent = activehwk.workdone/activehwk.totalwork
