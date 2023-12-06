@@ -91,6 +91,7 @@ player = character.Character("John")
 #Gameinfo Object
 game = gameinfo.Game(homeworkQ, teachers, player)
 game.activehwk = testhwk1
+game.activehwk.active = True
 # Main game loop
 while True:
     for event in pygame.event.get():
@@ -110,8 +111,12 @@ while True:
             for click in mouse_clicks:
                 for hwk in game.homeworkQ:
                     if hwk.queueclickrect.collidepoint(click):
-                        game.changeactivehwk(hwk)
-                        wholedeskdrawn = False
+                        if not hwk.finished and not hwk.active:
+                            game.changeactivehwk(hwk)
+                            wholedeskdrawn = False
+                        elif hwk.finished:
+                            game.homeworkQ.remove(hwk)
+                            wholedeskdrawn = False
                 for teacher in game.teachers:
                     if teacher.clickrect.collidepoint(click):
                         teacher.rgb = (100,100,100)
@@ -133,8 +138,8 @@ while True:
         deskobj.draw_desk(game.activehwk, game.homeworkQ, game.teachers)
         wholedeskdrawn = True
     current_time = pygame.time.get_ticks()
-    if current_time - last_time >= 333.3:
-        time += 10
+    if current_time - last_time >= 33.3:
+        time += 1
         last_time = current_time
         if time > 1440:
             day += 1
@@ -145,6 +150,8 @@ while True:
             deskobj.draw_homeworkQ_zone(game.homeworkQ)
             deskobj.draw_active_hwk(game.activehwk)
             game.redrawhomework = False
+        if game.activehwk is not None:
+            deskobj.draw_active_hwk_progess_bar(game.activehwk)
     # Render FPS counter
     fps = clock.get_fps()
     fps_text = font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color

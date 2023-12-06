@@ -28,3 +28,4 @@ class Teacher:
         g = random.randint(0,255)
         b = random.randint(0,255)
         return r,g,b
+    

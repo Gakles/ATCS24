@@ -9,26 +9,31 @@ class Game:
         self.redrawhomework = False
     
     def changeactivehwk(self, newhwk):
-        self.activehwk.active = False
+        if self.activehwk is not None:
+            self.activehwk.active = False
         self.activehwk = newhwk
         self.activehwk.active = True
 
     def update(self):
         #do work
-        self.activehwk.workdone += self.player.workingspeed * self.player.workpertime
+        if self.activehwk is not None:
+            self.activehwk.workdone += self.player.workingspeed * self.player.workpertime
         #add to the activehwks timespent
-        self.activehwk.timespent += 10
+            self.activehwk.timespent += 1
         #check if the hwk is finished
-        if self.activehwk.workdone >= self.activehwk.totalwork:
-            self.activehwk.finished = True
-            next_unfinished_hwk = None
-            for hwk in self.homeworkQ:
-                if not hwk.finished:
-                    next_unfinished_hwk = hwk
-                    break
-            if next_unfinished_hwk is not None:
-                self.homeworkQ.remove(next_unfinished_hwk)
-                self.homeworkQ.insert(0, self.activehwk)
-                self.activehwk = next_unfinished_hwk
-                self.changeactivehwk(next_unfinished_hwk)
+            if self.activehwk.workdone >= self.activehwk.totalwork:
+                self.activehwk.finished = True
+                self.activehwk = None
+                next_unfinished_hwk = None
+                for hwk in self.homeworkQ:
+                    if not hwk.finished:
+                        next_unfinished_hwk = hwk
+                        break
+                if next_unfinished_hwk is not None:
+                    self.changeactivehwk(next_unfinished_hwk)
+                    titlestring = ""
+                    for hwk in self.homeworkQ:
+                        titlestring += hwk.title
+                    print(titlestring)
+        #this could cause performance issues
         self.redrawhomework = True

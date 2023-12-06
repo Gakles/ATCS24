@@ -54,29 +54,36 @@ class deskdrawer:
             hwkcount += 1
             hwk.queueclickrect = clickrect
     def draw_active_hwk(self, activehomework):
-        pygame.draw.rect(self.screen, (119, 39, 9), (0.025*self.fifth_width, 1.05*self.info_zone_height, .95*self.fifth_width, .95*self.desk_zone_height))
-        homework_image = self.load_homework_image(activehomework.size, target_height=self.desk_zone_height // 2)
-        #size and blit the image
-        if homework_image:
-            image_width, image_height = homework_image.get_size()
-            image_x = (self.fifth_width - image_width) // 2
-            image_y = (self.desk_zone_height // 2 - image_height) // 2 + self.info_zone_height
-            self.screen.blit(homework_image, (image_x, image_y))
-        #Additional information for the selected homework
-        font = pygame.font.Font(None, 36)
-        lines = [
-            f"Size: {activehomework.size}",
-            f"From Class: {activehomework.assignment_from_class}",
-            f"Total Work: {activehomework.totalwork}",
-            f"Time Spent: {activehomework.timespent}",
-            f"Title: {activehomework.title}"
-        ]
-        y_offset = self.info_zone_height + self.desk_zone_height // 2 + 10  # Initial y-offset
-        for line in lines:
-            text_surface = font.render(line, True, (255, 255, 255))
-            text_rect = text_surface.get_rect(center=(self.fifth_width // 2, y_offset))
-            self.screen.blit(text_surface, text_rect)
-            y_offset += 40  # Adjust this value to control the spacing between lines
+        if not activehomework == None:
+            pygame.draw.rect(self.screen, (119, 39, 9), (0.025*self.fifth_width, 1.05*self.info_zone_height, .95*self.fifth_width, .95*self.desk_zone_height))
+            homework_image = self.load_homework_image(activehomework.size, target_height=self.desk_zone_height // 2)
+            #size and blit the image
+            if homework_image:
+                image_width, image_height = homework_image.get_size()
+                image_x = (self.fifth_width - image_width) // 2
+                image_y = (self.desk_zone_height // 2 - image_height) // 2 + self.info_zone_height
+                self.screen.blit(homework_image, (image_x, image_y))
+            #Additional information for the selected homework
+            font = pygame.font.Font(None, 26)
+            lines = [
+                f"Title: {activehomework.title}",
+                f"Size: {activehomework.size}",
+                f"From Class: {activehomework.assignment_from_class}",
+                f"Total Work: {activehomework.totalwork}",
+                f"Time Spent: {activehomework.timespent}"
+            ]
+            y_offset = self.info_zone_height + self.desk_zone_height // 2 + 10  # Initial y-offset
+            for line in lines:
+                text_surface = font.render(line, True, (255, 255, 255))
+                text_rect = text_surface.get_rect(center=(self.fifth_width // 2, y_offset))
+                self.screen.blit(text_surface, text_rect)
+                y_offset += 20  # Adjust this value to control the spacing between lines
+        else:
+            print("you're done for now")
+    def draw_active_hwk_progess_bar(self, activehwk):
+        pygame.draw.rect(self.screen, (79,79,79), (0.025*self.fifth_width, self.info_zone_height + .8*self.desk_zone_height, .95*self.fifth_width, .075*self.desk_zone_height))
+        completionpercent = activehwk.workdone/activehwk.totalwork
+        pygame.draw.rect(self.screen, (200,240,0), (0.025*self.fifth_width, self.info_zone_height + .8*self.desk_zone_height, completionpercent * (.95*self.fifth_width), .075*self.desk_zone_height))
 
     def drawteacher_zone(self, teachers):
         pygame.draw.rect(self.screen, (220, 150, 65), (4.025 * self.fifth_width, 1.025 * self.info_zone_height, 0.95 * self.fifth_width, 0.975 * self.desk_zone_height))
