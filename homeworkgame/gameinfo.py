@@ -113,10 +113,12 @@ class Game:
     def teacherupdates(self):
         for teacher in self.teachers:
             teacher.update()
-            #if teacher.has_new_hwk:
-                #newhwkstats = teacher.generate_new_homework()
-                #new_hwk = homework.Homework(newhwkstats[0], newhwkstats[1], newhwkstats[2], newhwkstats[3])
-                #self.homeworkQ.append(new_hwk)
+            if teacher.has_new_hwk:
+                newhwkstats = teacher.generate_new_homework()
+                new_hwk = homework.Homework(newhwkstats[0], newhwkstats[1], newhwkstats[2], newhwkstats[3])
+                self.homeworkQ.append(new_hwk)
+                self.redrawhomework = True
+                teacher.has_new_hwk = False
 
     def run(self):
         while True:
