@@ -23,15 +23,9 @@ class deskdrawer:
         self.fifth_width = window_width//5
     
     #Loads the main hwk image
-    def load_homework_image(self, size, target_height):
+    def load_homework_image(self, hwk, target_height):
         current_path = os.path.dirname(__file__)
-        if size == "minor":
-            image_path = os.path.join(current_path, "images", "minorhwk.png")
-        elif size == "major":
-            image_path = os.path.join(current_path, "images", "majorhwk.png")
-        else:
-            return None
-        original_image = pygame.image.load(image_path)
+        original_image = hwk.image
         original_width, original_height = original_image.get_size()
         scale_factor = target_height / original_height
         resized_image = pygame.transform.scale(original_image, (int(original_width * scale_factor), target_height))
@@ -57,7 +51,7 @@ class deskdrawer:
     def draw_active_hwk(self, activehomework):
         if not activehomework == None:
             pygame.draw.rect(self.screen, (119, 39, 9), (0.025*self.fifth_width, 1.05*self.info_zone_height, .95*self.fifth_width, .95*self.desk_zone_height))
-            homework_image = self.load_homework_image(activehomework.size, target_height=self.desk_zone_height // 2)
+            homework_image = self.load_homework_image(activehomework, target_height=self.desk_zone_height // 2)
             #size and blit the image
             if homework_image:
                 image_width, image_height = homework_image.get_size()
