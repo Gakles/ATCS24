@@ -110,6 +110,14 @@ class Game:
                     if teacher.clickrect.collidepoint(click):
                         teacher.rgb = (100,100,100)
                         self.wholedeskdrawn = False
+    def teacherupdates(self):
+        for teacher in self.teachers:
+            teacher.update()
+            #if teacher.has_new_hwk:
+                #newhwkstats = teacher.generate_new_homework()
+                #new_hwk = homework.Homework(newhwkstats[0], newhwkstats[1], newhwkstats[2], newhwkstats[3])
+                #self.homeworkQ.append(new_hwk)
+
     def run(self):
         while True:
             self.mouse_clicks = []
@@ -144,6 +152,7 @@ class Game:
                 self.deskobj.draw_desk(self.activehwk, self.homeworkQ, self.teachers)
                 self.wholedeskdrawn = True
             current_time = pygame.time.get_ticks()
+            #This checks if it's time for a "game tick" to happen
             if current_time - self.last_time >= 33.3:
                 self.time += 1
                 self.last_time = current_time
@@ -158,6 +167,7 @@ class Game:
                     self.redrawhomework = False
                 if self.activehwk is not None:
                     self.deskobj.draw_active_hwk_progess_bar(self.activehwk)
+                self.teacherupdates()
             # Render FPS counter
             fps = self.clock.get_fps()
             fps_text = self.font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color

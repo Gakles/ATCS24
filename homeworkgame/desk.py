@@ -43,8 +43,6 @@ class deskdrawer:
         font = pygame.font.Font(None, 16)
         for hwk in homeworkQ:
             clickrect = pygame.Rect(self.fifth_width + .025*self.fifth_width, 1.025*self.info_zone_height + (hwkcount*(.125*self.info_zone_height)), 0.4*self.fifth_width - .05*self.fifth_width, .1*self.info_zone_height)
-            random_rect = pygame.Rect(clickrect.right + 200, clickrect.top, 200, clickrect.height)
-            pygame.draw.rect(self.screen, hwk.rgb, random_rect)
             if not hwk.active:
                 pygame.draw.rect(self.screen, (0, 200,255), clickrect)
             else:

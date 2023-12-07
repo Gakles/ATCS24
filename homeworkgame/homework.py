@@ -1,5 +1,4 @@
 import pygame
-import random
 
 class Homework:
     def __init__(self, size, assignment_from_class, totalwork, assignment_title):
@@ -12,4 +11,3 @@ class Homework:
         self.finished = False
         self.queueclickrect = None
         self.active = False
-        self.rgb = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))

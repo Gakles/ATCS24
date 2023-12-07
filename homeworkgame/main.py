@@ -1,8 +1,5 @@
 import pygame
-import sys
-import os
 import info as Info
-import desk
 import homework
 from helpers import*
 import teacher
