@@ -1,5 +1,6 @@
 import pygame
 import os
+import random
 
 def draw_static_info(screen, window_width, window_height, info_zone_height, calendar_image, static_image, pillow_image, schedule_width, box_width, box_height):
     # Draw info zone
@@ -39,6 +40,17 @@ def draw_static_info(screen, window_width, window_height, info_zone_height, cale
 
     # Draw pillow image to fill the empty space between the 3 boxes on the 4th row and the bottom of the info zone
     pillow_image.draw(screen)
+
+class daycrossmarks:
+    def __init__(self, screen, x_image, window_width, info_zone_height):
+        self.x_image = pygame.transform.scale(x_image, (32,28))
+        self.screen = screen
+        self.third_width = window_width//3
+        self.info_zone_height = info_zone_height
+        self.days = 0
+    def drawnewx(self):
+        self.days += 1
+        self.screen.blit(self.x_image, (10*self.days, 10*self.days))
 
 def draw_dynamic_info(type, screen, window_width, window_height, info_zone_height, time_of_day, button_image):
     if type == "timeupdate":

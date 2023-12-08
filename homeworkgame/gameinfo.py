@@ -44,6 +44,8 @@ class Game:
         self.empty_space_width = self.window_width - (2 * self.window_width // 3 + 3 * self.schedule_width // 7)
         self.box_width = self.schedule_width // 7
         self.box_height = self.info_zone_height // 4
+        self.x_width = self.window_width // 60
+        self.x_height = self.info_zone_height // 10
 
         # Boolean flags for drawing stuff
         self.static_info_drawn = False
@@ -59,7 +61,8 @@ class Game:
         self.static_image = Image(os.path.join(current_path, "images", "desk.png"), self.static_image_width, self.static_image_height, (self.calendar_width, 0))
         self.pillow_image = Image(os.path.join(current_path, "images", "pillow.png"), self.empty_space_width, self.info_zone_height // 4, (2 * self.window_width // 3 + 3 * self.schedule_width // 7, .75*self.info_zone_height))
         self.button_image = Image(os.path.join(current_path, "images", "button.png"), self.button_width, self.button_height, (.554*self.window_width, self.info_zone_height-self.button_height))
-        self.images = {"calendar" : self.calendar_image, "static" : self.static_image, "pillow" : self.pillow_image, "button" : self.button_image}
+        self.x_image = pygame.image.load(os.path.join(current_path, "images", "x.png"))
+        self.images = {"calendar" : self.calendar_image, "static" : self.static_image, "pillow" : self.pillow_image, "button" : self.button_image, "x" : self.x_image}
 
         #Important game objects
         self.Info = Info
@@ -147,6 +150,8 @@ class Game:
             # Draw static info if it hasn't been drawn
             if not self.static_info_drawn:
                 Info.draw_static_info(self.screen, self.window_width, self.window_height, self.info_zone_height, self.images["calendar"], self.images["static"], self.images["pillow"], self.schedule_width, self.box_width, self.box_height)
+                self.crossmarks = Info.daycrossmarks(self.screen, self.images["x"], self.window_width, self.info_zone_height)
+                self.crossmarks.drawnewx()
                 self.static_info_drawn = True
             if not self.button_drawn:
                 Info.draw_dynamic_info("drawbutton", self.screen, self.window_width, self.window_height, self.info_zone_height, self.time, self.images["button"])
@@ -160,6 +165,7 @@ class Game:
                 self.time += 1
                 self.last_time = current_time
                 if self.time > 1440:
+                    self.crossmarks.drawnewx()
                     self.day += 1
                     self.time = 0
                 Info.draw_dynamic_info("timeupdate", self.screen, self.window_width, self.window_height, self.info_zone_height, self.time, self.images["button"])
