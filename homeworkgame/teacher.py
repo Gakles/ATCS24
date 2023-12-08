@@ -17,7 +17,8 @@ class Teacher:
         self.clickrect = None
         self.newassignment = True
         self.current_state = "calm"
-        self.hwkpropensity = 0.5
+        self.hwkdifficulty = 1
+        self.hwkcooldown = 1500
         self.transitions = {
             ("chill", "input"): (self.transition_to_calm, "calm"),
             ("calm", "input"): (self.transition_to_out_for_blood, "out_for_blood"),
@@ -47,31 +48,34 @@ class Teacher:
             action()
             self.current_state = result[1]
     def transition_to_calm(self):
-        self.hwkpropensity = 0.5
+        self.hwkcooldown = 1500
+        self.hwkdifficulty = 1
         print("I'm teacher " + self.name + " and now I'm calm")
     def transition_to_out_for_blood(self):
-        self.hwkpropensity = .80
+        self.hwkcooldown = 750
+        self.hwkdifficulty = 1
         print("I'm teacher " + self.name + " and now I'm out for blood!")
     def transition_to_chill(self):
-        self.hwkpropensity = 0.2
+        self.hwkcooldown = 2500
+        self.hwkdifficulty = 1
         print("I'm teacher " + self.name + " and now I'm chill")
     def generate_new_homework(self):
         size = ""
-        if self.hwkpropensity >= round(random.uniform(0,1), 3):
+        if self.hwkdifficulty < round(random.uniform(0, 2), 3):
             size += "minor"
         else:
             size += "major"
         totalwork = 0
         if size == "minor":
-            totalwork = 300*self.hwkpropensity * random.randint(1, 3)
+            totalwork = 300*self.hwkdifficulty * random.randint(1, 3)
         else:
-            totalwork = 500*self.hwkpropensity * random.randint(1, 3)
+            totalwork = 500*self.hwkdifficulty * random.randint(1, 3)
         return [size, self.subject, totalwork, "New Homework"]
     def update(self):
-        self.time_since_last_hwk += 1
+        self.time_since_last_hwk += 100
         if not self.currentlygrading:
             #Check if new homework should be
-            if (round(random.uniform(0, 1), 3) + self.hwkpropensity) * self.time_since_last_hwk >= 1000:
+            if self.time_since_last_hwk >= self.hwkcooldown:
                 print("New homework")
                 self.has_new_hwk = True
                 self.time_since_last_hwk = 0
