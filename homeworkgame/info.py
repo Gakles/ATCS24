@@ -53,10 +53,10 @@ class daycrossmarks:
         self.days += 1
         self.ydownoffset = 0
 
-        for i in range(4, 26, 7):
-            if self.days <= i:
-                break
-            self.ydownoffset += self.info_zone_height / 6.2
+        if self.days <= 4:
+            self.ydownoffset = 0
+        else: 
+            self.ydownoffset = (((self.days+2)//7)*self.info_zone_height)/6.5
 
         self.widthoffset = self.days + 2
         self.screen.blit(self.x_image, ((self.widthoffset%7)*self.third_width/7 + self.third_width/21 + random.randint(-10,10), self.info_zone_height - .725*self.info_zone_height + self.ydownoffset + random.randint(-3,3)))

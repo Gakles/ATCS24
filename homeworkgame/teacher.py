@@ -73,9 +73,9 @@ class Teacher:
             size += "major"
         totalwork = 0
         if size == "minor":
-            totalwork = 300*self.hwkdifficulty * random.randint(1, 3)
+            totalwork = 100*self.hwkdifficulty * random.randint(1, 3)
         else:
-            totalwork = 500*self.hwkdifficulty * random.randint(1, 3)
+            totalwork = 300*self.hwkdifficulty * random.randint(1, 3)
         return [size, self.subject, totalwork, "New Homework"]
     def update(self):
         #keep teacher static if grading
