@@ -77,8 +77,8 @@ class deskdrawer:
         pygame.draw.rect(self.screen, (79,79,79), (0.025*self.fifth_width, self.info_zone_height + .8*self.desk_zone_height, .95*self.fifth_width, .075*self.desk_zone_height))
         completionpercent = activehwk.workdone/activehwk.totalwork
         pygame.draw.rect(self.screen, (200,240,0), (0.025*self.fifth_width, self.info_zone_height + .8*self.desk_zone_height, completionpercent * (.95*self.fifth_width), .075*self.desk_zone_height))
-
-    def drawteacherbar(self, teacher):
+        
+    def drawteacherassignmentbar(self, teacher):
         original_rect = teacher.clickrect
 
         # Calculate the dimensions of the new rectangle
@@ -94,18 +94,16 @@ class deskdrawer:
 
         # Draw the bottom 1/4 rectangle
         pygame.draw.rect(self.screen, (79, 79, 79), bottom_quarter_rect)
-
-        hwktimer = teacher.time_since_last_hwk/teacher.hwkcooldown
-
-        # Calculate the width of the loading bar based on hwktimer
-        loading_bar_width = hwktimer * new_rect_width
-
-        # Create the loading bar rectangle
-        loading_bar_rect = pygame.Rect(new_rect_x, new_rect_y, loading_bar_width, new_rect_height)
-        print(loading_bar_rect)
-
-        # Draw the loading bar
-        pygame.draw.rect(self.screen, (255, 255, 0), loading_bar_rect)
+        if not teacher.currentlygrading:
+            hwktimer = teacher.time_since_last_hwk/teacher.hwkcooldown
+            loading_bar_width = hwktimer * new_rect_width
+            loading_bar_rect = pygame.Rect(new_rect_x, new_rect_y, loading_bar_width, new_rect_height)
+            pygame.draw.rect(self.screen, (255, 255, 0), loading_bar_rect)
+        else:
+            hwktimer = teacher.time_spent_grading/teacher.total_time_to_grade
+            loading_bar_width = hwktimer * new_rect_width
+            loading_bar_rect = pygame.Rect(new_rect_x, new_rect_y, loading_bar_width, new_rect_height)
+            pygame.draw.rect(self.screen, (255, 0, 0), loading_bar_rect)
 
     def drawteacher_zone(self, teachers):
         pygame.draw.rect(self.screen, (220, 150, 65), (4.025 * self.fifth_width, 1.025 * self.info_zone_height, 0.95 * self.fifth_width, 0.975 * self.desk_zone_height))
@@ -143,7 +141,7 @@ class deskdrawer:
             # Draw the text surface below the top of the clickrect
             self.screen.blit(textsubject_surface, textsubject_rect)
             self.screen.blit(textname_surface, textname_rect)
-            self.drawteacherbar(teacher)
+            self.drawteacherassignmentbar(teacher)
             teacher_count += 1
 
 

@@ -10,6 +10,8 @@ class Teacher:
         self.time_since_last_hwk = 0
         self.has_new_hwk = False
         self.currentlygrading = False
+        self.total_time_to_grade = 0
+        self.time_spent_grading = 0
         self.randrgb = (self.rand_rgb())
         self.rgb = self.randrgb
         self.clickrect = None
@@ -18,9 +20,9 @@ class Teacher:
         self.hwkdifficulty = 1
         self.hwkcooldown = 1500
         self.transitions = {
-            ("chill", "input"): (self.transition_to_calm, "calm"),
-            ("calm", "input"): (self.transition_to_out_for_blood, "out_for_blood"),
-            ("out for blood", "input"): (self.transition_to_chill, "chill"),
+            ("chill", "warming up"): (self.transition_to_calm, "calm"),
+            ("calm", "feeling the rage"): (self.transition_to_out_for_blood, "out_for_blood"),
+            ("out for blood", "chilling out"): (self.transition_to_chill, "chill"),
         }
 
     def get_rand_image(self):
@@ -57,6 +59,12 @@ class Teacher:
         self.hwkcooldown = 2500
         self.hwkdifficulty = 1
         print("I'm teacher " + self.name + " and now I'm chill")
+    
+    def startgrading(self):
+        self.currentlygrading = True
+        self.total_time_to_grade = self.hwkdifficulty * 20 * random.randint(1,10)
+        self.time_spent_grading = 0
+
     def generate_new_homework(self):
         size = ""
         if self.hwkdifficulty < round(random.uniform(0, 2), 3):
@@ -70,9 +78,15 @@ class Teacher:
             totalwork = 500*self.hwkdifficulty * random.randint(1, 3)
         return [size, self.subject, totalwork, "New Homework"]
     def update(self):
-        self.time_since_last_hwk += 1
+        #keep teacher static if grading
+        if self.currentlygrading:
+            self.time_spent_grading += 1
+            if self.time_spent_grading >= self.total_time_to_grade:
+                self.currentlygrading = False
+                self.total_time_to_grade = 0
+        #if not grading advance new assignment
         if not self.currentlygrading:
-            #Check if new homework should be
+            self.time_since_last_hwk += 1
             if self.time_since_last_hwk >= self.hwkcooldown:
                 self.has_new_hwk = True
                 self.time_since_last_hwk = 0

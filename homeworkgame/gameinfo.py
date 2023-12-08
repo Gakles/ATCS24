@@ -103,6 +103,8 @@ class Game:
                             self.changeactivehwk(hwk)
                             self.wholedeskdrawn = False
                         elif hwk.finished:
+                            #submitting the hwk
+                            hwk.teacher.startgrading()
                             self.homeworkQ.remove(hwk)
                             self.wholedeskdrawn = False
                 for teacher in self.teachers:
@@ -112,10 +114,10 @@ class Game:
     def teacherupdates(self):
         for teacher in self.teachers:
             teacher.update()
-            self.deskobj.drawteacherbar(teacher)
+            self.deskobj.drawteacherassignmentbar(teacher)
             if teacher.has_new_hwk:
                 newhwkstats = teacher.generate_new_homework()
-                new_hwk = homework.Homework(newhwkstats[0], newhwkstats[1], newhwkstats[2], newhwkstats[3])
+                new_hwk = homework.Homework(newhwkstats[0], newhwkstats[1], newhwkstats[2], newhwkstats[3], teacher)
                 self.homeworkQ.append(new_hwk)
                 self.redrawhomework = True
                 teacher.has_new_hwk = False

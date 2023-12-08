@@ -3,7 +3,7 @@ import os
 import random
 
 class Homework:
-    def __init__(self, size, assignment_from_class, totalwork, assignment_title):
+    def __init__(self, size, assignment_from_class, totalwork, assignment_title, assigning_teacher):
         self.size = size
         self.assignment_from_class = assignment_from_class
         self.totalwork = totalwork
@@ -13,6 +13,7 @@ class Homework:
         self.finished = False
         self.queueclickrect = None
         self.active = False
+        self.teacher = assigning_teacher
         self.image = self.get_rand_image()
     def get_rand_image(self):
         script_directory = os.path.dirname(__file__)
