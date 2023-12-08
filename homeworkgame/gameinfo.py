@@ -99,7 +99,6 @@ class Game:
         for click in self.mouse_clicks:
             for hwk in self.homeworkQ:
                 if hwk.queueclickrect.collidepoint(click):
-                        print("clicked on " + hwk.title)
                         if not hwk.finished and not hwk.active:
                             self.changeactivehwk(hwk)
                             self.wholedeskdrawn = False
@@ -113,6 +112,7 @@ class Game:
     def teacherupdates(self):
         for teacher in self.teachers:
             teacher.update()
+            self.deskobj.drawteacherbar(teacher)
             if teacher.has_new_hwk:
                 newhwkstats = teacher.generate_new_homework()
                 new_hwk = homework.Homework(newhwkstats[0], newhwkstats[1], newhwkstats[2], newhwkstats[3])
@@ -140,7 +140,6 @@ class Game:
                     appendstr = ""
                     for hwk in self.homeworkQ:
                         appendstr += hwk.title + " "
-                    print(appendstr + "<-Thats the queue" + str(time))
                     self.handle_mouse_click(event)
 
             # Draw static info if it hasn't been drawn
@@ -163,13 +162,13 @@ class Game:
                     self.time = 0
                 Info.draw_dynamic_info("timeupdate", self.screen, self.window_width, self.window_height, self.info_zone_height, self.time, self.images["button"])
                 self.update()
+                self.teacherupdates()
                 if self.redrawhomework:
                     self.deskobj.draw_homeworkQ_zone(self.homeworkQ)
                     self.deskobj.draw_active_hwk(self.activehwk)
                     self.redrawhomework = False
                 if self.activehwk is not None:
                     self.deskobj.draw_active_hwk_progess_bar(self.activehwk)
-                self.teacherupdates()
             # Render FPS counter
             fps = self.clock.get_fps()
             fps_text = self.font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color

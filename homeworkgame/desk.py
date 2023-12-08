@@ -98,13 +98,14 @@ class deskdrawer:
         hwktimer = teacher.time_since_last_hwk/teacher.hwkcooldown
 
         # Calculate the width of the loading bar based on hwktimer
-        loading_bar_width = (hwktimer / teacher.hwkcooldown) * new_rect_width
+        loading_bar_width = hwktimer * new_rect_width
 
         # Create the loading bar rectangle
         loading_bar_rect = pygame.Rect(new_rect_x, new_rect_y, loading_bar_width, new_rect_height)
+        print(loading_bar_rect)
 
         # Draw the loading bar
-        pygame.draw.rect(self.screen, (255, 0, 0), loading_bar_rect)
+        pygame.draw.rect(self.screen, (255, 255, 0), loading_bar_rect)
 
     def drawteacher_zone(self, teachers):
         pygame.draw.rect(self.screen, (220, 150, 65), (4.025 * self.fifth_width, 1.025 * self.info_zone_height, 0.95 * self.fifth_width, 0.975 * self.desk_zone_height))

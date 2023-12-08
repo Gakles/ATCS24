@@ -8,8 +8,6 @@ class Teacher:
         self.subject = subject
         self.image = self.get_rand_image()
         self.time_since_last_hwk = 0
-        self.previoushwkgradingtime = 0
-        self.previoushwkgradingtimespent = 0
         self.has_new_hwk = False
         self.currentlygrading = False
         self.randrgb = (self.rand_rgb())
@@ -72,11 +70,10 @@ class Teacher:
             totalwork = 500*self.hwkdifficulty * random.randint(1, 3)
         return [size, self.subject, totalwork, "New Homework"]
     def update(self):
-        self.time_since_last_hwk += 100
+        self.time_since_last_hwk += 1
         if not self.currentlygrading:
             #Check if new homework should be
             if self.time_since_last_hwk >= self.hwkcooldown:
-                print("New homework")
                 self.has_new_hwk = True
                 self.time_since_last_hwk = 0
         
