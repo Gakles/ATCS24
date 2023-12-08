@@ -162,7 +162,7 @@ class Game:
             current_time = pygame.time.get_ticks()
             #This checks if it's time for a "game tick" to happen
             if current_time - self.last_time >= 33.3:
-                self.time += 1
+                self.time += 200
                 self.last_time = current_time
                 if self.time > 1440:
                     self.crossmarks.drawnewx()

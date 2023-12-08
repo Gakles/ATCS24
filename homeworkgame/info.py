@@ -43,14 +43,23 @@ def draw_static_info(screen, window_width, window_height, info_zone_height, cale
 
 class daycrossmarks:
     def __init__(self, screen, x_image, window_width, info_zone_height):
-        self.x_image = pygame.transform.scale(x_image, (32,28))
+        self.x_image = pygame.transform.scale(x_image, (26,22))
         self.screen = screen
         self.third_width = window_width//3
         self.info_zone_height = info_zone_height
         self.days = 0
+        self.ydownoffset = 0
     def drawnewx(self):
         self.days += 1
-        self.screen.blit(self.x_image, (10*self.days, 10*self.days))
+        self.ydownoffset = 0
+
+        for i in range(4, 26, 7):
+            if self.days <= i:
+                break
+            self.ydownoffset += self.info_zone_height / 6.2
+
+        self.widthoffset = self.days + 2
+        self.screen.blit(self.x_image, ((self.widthoffset%7)*self.third_width/7 + self.third_width/21 + random.randint(-10,10), self.info_zone_height - .725*self.info_zone_height + self.ydownoffset + random.randint(-3,3)))
 
 def draw_dynamic_info(type, screen, window_width, window_height, info_zone_height, time_of_day, button_image):
     if type == "timeupdate":
