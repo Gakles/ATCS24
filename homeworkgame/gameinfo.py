@@ -94,7 +94,7 @@ class Game:
                     titlestring = ""
                     for hwk in self.homeworkQ:
                         titlestring += hwk.title
-        #this could cause performance issues
+        #probably doesn't cause fps issues
         self.redrawhomework = True
     
     def handle_mouse_click(self, event):
@@ -180,6 +180,7 @@ class Game:
             # Render FPS counter
             fps = self.clock.get_fps()
             fps_text = self.font.render(f"FPS: {int(fps)}", True, (0, 0, 0))  # Black color
+            pygame.draw.rect(self.screen, (129,129,129), fps_text.get_rect(topleft =(self.window_width - 120, 20)))
             self.screen.blit(fps_text, (self.window_width - 120, 20))  # Position the FPS counter in the top right corner
 
             # Update the display
