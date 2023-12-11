@@ -88,6 +88,7 @@ class Teacher:
         if not self.currentlygrading:
             self.time_since_last_hwk += 1
             if self.time_since_last_hwk >= self.hwkcooldown:
+                self.hwkcooldown += random.randint(-200, 200)
                 self.has_new_hwk = True
                 self.time_since_last_hwk = 0
         

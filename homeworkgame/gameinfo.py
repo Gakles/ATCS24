@@ -157,7 +157,7 @@ class Game:
                 Info.draw_dynamic_info("drawbutton", self.screen, self.window_width, self.window_height, self.info_zone_height, self.time, self.images["button"])
                 self.button_drawn = True
             if not self.wholedeskdrawn:
-                self.deskobj.draw_desk(self.activehwk, self.homeworkQ, self.teachers)
+                self.deskobj.draw_desk(self.activehwk, self.homeworkQ, self.teachers, self.player)
                 self.wholedeskdrawn = True
             current_time = pygame.time.get_ticks()
             #This checks if it's time for a "game tick" to happen

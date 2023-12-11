@@ -144,15 +144,32 @@ class deskdrawer:
             self.drawteacherassignmentbar(teacher)
             teacher_count += 1
 
+    def draw_xp_shop(self, player):
+        startx = 1.4*self.fifth_width
+        pygame.draw.rect(self.screen, (0,100,100),(startx*1.025 , 1.025*self.info_zone_height, .975*(2.6*self.fifth_width), .975*self.desk_zone_height))
+        font = pygame.font.Font(None, 36)
+        playernametext = font.render(player.name + "'s Upgrades: ", True, (0, 0, 0))
+        playernamerect = playernametext.get_rect(topleft = (startx*1.05,1.05*self.info_zone_height))
+        playernamebgrect = playernamerect
+        width_increase = playernamebgrect.width * 0.05
+        height_increase = playernamebgrect.height * 0.05
+        # Adjust the rectangle by expanding it on all sides
+        playernamebgrect.x -= width_increase / 2
+        playernamebgrect.y -= height_increase / 2
+        playernamebgrect.width += width_increase
+        playernamebgrect.height += height_increase
+        pygame.draw.rect(self.screen, (20, 150,150), playernamebgrect)
+        self.screen.blit(playernametext, playernamerect)
+        pygame.draw.rect(self.screen, )
 
-
-    def draw_desk(self, activehomework, homeworkQ, teachers):
+    def draw_desk(self, activehomework, homeworkQ, teachers, player):
         #Left 1/5  brown rect
         pygame.draw.rect(self.screen, (139, 69, 19), (0, self.info_zone_height, self.fifth_width, self.desk_zone_height))
         #Draw the active homework
         self.draw_active_hwk(activehomework)
         #make the middle, blue zone
         pygame.draw.rect(self.screen, (0, 0, 255), (self.fifth_width, self.info_zone_height, self.fifth_width * 3, self.desk_zone_height))
+        self.draw_xp_shop(player)
         #Make the homework queue
         self.draw_homeworkQ_zone(homeworkQ)
         
