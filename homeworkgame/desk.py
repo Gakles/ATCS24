@@ -160,7 +160,7 @@ class deskdrawer:
         playernamebgrect.height += height_increase
         pygame.draw.rect(self.screen, (20, 150,150), playernamebgrect)
         self.screen.blit(playernametext, playernamerect)
-        pygame.draw.rect(self.screen, )
+        
 
     def draw_desk(self, activehomework, homeworkQ, teachers, player):
         #Left 1/5  brown rect
@@ -177,3 +177,18 @@ class deskdrawer:
         pygame.draw.rect(self.screen, (255, 0, 0), (self.fifth_width * 4, self.info_zone_height, self.fifth_width, self.desk_zone_height))
         #make teachers
         self.drawteacher_zone(teachers)
+
+class shopbutton:
+    def __init__(self, screen, rect, title, startcost):
+        self.rect = rect
+        self.screen = screen
+        self.color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+        self.font = pygame.font.Font(None, 36)
+        self.title = self.font.render(title, True, (0, 0, 0))
+        self.costtext = self.font.render(str(startcost), True, (0, 0, 0))
+        self.cost = startcost
+        
+
+    def drawself(self):
+        pygame.draw.rect(self.screen, self.color, self.rect)
+        titletextrect = 
