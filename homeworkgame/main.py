@@ -33,7 +33,7 @@ teachers = [teacher1, teacher2, teacher3, teacher4, teacher5]
 #Mouse event handler
 
 #make character
-player = character.Character("John")
+player = character.Character("Miguel")
 #Gameinfo Object
 game = gameinfo.Game(homeworkQ, teachers)
 game.activehwk = testhwk1

@@ -191,4 +191,4 @@ class shopbutton:
 
     def drawself(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
-        titletextrect = 
+        #titletextrect = 

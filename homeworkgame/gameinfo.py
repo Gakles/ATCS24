@@ -14,7 +14,7 @@ class Game:
         self.homeworkQ = homeworkQ
         self.activehwk = None
         self.teachers = teachers
-        self.player = character.Character("Johnathan")
+        self.player = character.Character("Player Name Here")
         self.redrawhomework = False
         self.mouse_clicks = []
         self.keys_pressed = set()
