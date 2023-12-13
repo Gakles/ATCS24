@@ -26,8 +26,8 @@ class Game:
         self.clock = pygame.time.Clock()
 
         #Graphics Variables
-        self.window_width = 1400
-        self.window_height = 750
+        self.window_width = 1440
+        self.window_height = 780
         self.window_size = (self.window_width, self.window_height)
         self.screen = pygame.display.set_mode(self.window_size)
         pygame.display.set_caption("Pygame Game Loop")
