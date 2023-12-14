@@ -91,4 +91,11 @@ class Teacher:
                 self.hwkcooldown += random.randint(-200, 200)
                 self.has_new_hwk = True
                 self.time_since_last_hwk = 0
+                chance = random.randint(1,6)
+                if chance == 1:
+                    self.transition_to_chill()
+                if chance == 2:
+                    self.transition_to_out_for_blood()
+                if chance >= 5:
+                    self.transition_to_calm()
         
