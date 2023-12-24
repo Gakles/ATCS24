@@ -2,12 +2,12 @@
 import json
 import os
 from gameobjects.supply_truck import Supply_Truck
+from gameobjects.ural_truck import Ural_Truck
 
 def create_vehicle(vehicle_type):
 
     current_directory = os.path.dirname(__file__)  # Get the directory of the current script
-    file_path = os.path.join(current_directory, "data", f"{vehicle_type.lower()}_data.json")
-    print(file_path)
+    file_path = os.path.join(current_directory, "data", f"{vehicle_type.lower()}.json")
     with open(file_path, 'r') as file:
         data = json.load(file)
 

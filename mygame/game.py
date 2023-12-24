@@ -5,6 +5,7 @@ from createvehicle import create_vehicle
 supply_truck = create_vehicle("supply_truck")
 print(supply_truck.stats["fuel"])
 uraltruck = create_vehicle("ural_truck")
+uraltruck.honk_horn()
 
 class game():
     def __init__(self):
