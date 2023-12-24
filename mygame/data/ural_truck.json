@@ -3,11 +3,11 @@
     "name" : "Ural-4320",
     "uid" : 0,
     "maxfuel" : 79.2516,
-    "currentfuel" : 0,
     "fuelconsumptionperkilomenter" : 0.0792516,
     "maximumspeed" : 85,
     "acceleration" : 5,
     "deceleration" : 2.5,
     "reverse" : 1.5,
-    "mudresistance" : 0.5
+    "mudresistance" : 0.5,
+    "maxsupply" : 12000
 }
