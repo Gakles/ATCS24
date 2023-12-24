@@ -2,5 +2,5 @@ import pygame
 import game
 pygame.init()
 
-game = game.game()
+game = game.Game()
 game.run()
