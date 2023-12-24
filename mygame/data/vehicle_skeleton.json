@@ -1,0 +1,13 @@
+{
+    "class" : "Class_Name",
+    "name" : "Vehicle Name",
+    "uid" : 0,
+    "maxfuel" : 0,
+    "currentfuel" : 0,
+    "fuelconsumptionperkilomenter" : 0,
+    "maximumspeed" : 0,
+    "acceleration" : 0,
+    "deceleration" : 0,
+    "reverse" : 0,
+    "mudresistance" : 0
+}
