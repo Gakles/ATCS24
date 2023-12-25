@@ -2,16 +2,14 @@ import pygame
 import sys
 from createvehicle import create_vehicle
 from graphics.drawbackground import DrawBackground
+from graphics.drawconvoy import DrawConvoy
 from gameobjects.convoy import Convoy
 
 supply_truck = create_vehicle("supply_truck")
-print(supply_truck.stats["fuel"])
 uraltruck1 = create_vehicle("ural_truck")
-uraltruck1.honk_horn()
 uraltruck2 = create_vehicle("ural_truck")
 
 convoy = Convoy([uraltruck1, uraltruck2])
-print(convoy.acceleration)
 
 class Game:
     def __init__(self):
@@ -20,6 +18,8 @@ class Game:
         self.window_size = (self.window_width, self.window_height)
         self.screen = pygame.display.set_mode(self.window_size)
         self.drawbackground = DrawBackground(self.screen, self.window_size)
+        convoy.update_convoy_order()
+        self.drawconvoy = DrawConvoy(self.screen, self.window_size, convoy)
         pygame.display.set_caption("My Game")
         self.keys_pressed = set()
 
@@ -34,12 +34,12 @@ class Game:
             # Update game logic here
             
             convoy.update(self.keys_pressed)
-            print(convoy.currentspeed, self.keys_pressed)
 
             # Draw game elements here
 
             self.drawbackground.update(convoy.currentspeed)
             self.drawfpscounter()
+            self.drawconvoy.drawvehicles()
             pygame.display.flip()
 
             # FPS limiter

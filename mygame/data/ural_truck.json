@@ -10,5 +10,8 @@
     "deceleration" : 2.5,
     "reverseacceleration" : 1.5,
     "mudresistance" : 0.5,
-    "maxsupply" : 12000
+    "maxsupply" : 12000,
+    "length" : 7.366,
+    "width" : 2.5,
+    "sharing_fuel" : true
 }

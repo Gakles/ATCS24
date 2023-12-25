@@ -1,16 +1,19 @@
+import pygame
 class Convoy:
     def __init__(self, vehicles):
         self.vehicles = []
         for vehicle in vehicles:
             self.vehicles.append(vehicle)
+        self.update_convoy_order()
         self.currentspeed = 0
-        self.acceleration = self.calculate_current_max_attribute("acceleration")
-        self.maxspeed = self.calculate_current_max_attribute("maximumspeed")
-        self.deceleration = self.calculate_current_max_attribute("deceleration")
-        self.reverseacc = self.calculate_current_max_attribute("reverseacceleration")
-        self.maxreverse = self.calculate_current_max_attribute("maximumreverse")
+        self.acceleration = self.calculate_current_min_attribute("acceleration")
+        self.maxspeed = self.calculate_current_min_attribute("maximumspeed")
+        self.deceleration = self.calculate_current_min_attribute("deceleration")
+        self.reverseacc = self.calculate_current_min_attribute("reverseacceleration")
+        self.maxreverse = self.calculate_current_min_attribute("maximumreverse")
 
-    def calculate_current_max_attribute(self, attribute):
+
+    def calculate_current_min_attribute(self, attribute):
         min_vehicle = min(self.vehicles, key=lambda x: x.stats[attribute])
         return min_vehicle.stats[attribute]
     
@@ -46,3 +49,9 @@ class Convoy:
             self.decelerate()
         else:
             self.passivedecelerate()
+
+    def update_convoy_order(self):
+        i = 1
+        for vehicle in self.vehicles:
+            vehicle.position_in_convoy = i
+            i+=1
