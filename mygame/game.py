@@ -2,11 +2,16 @@ import pygame
 import sys
 from createvehicle import create_vehicle
 from graphics.drawbackground import DrawBackground
+from gameobjects.convoy import Convoy
 
 supply_truck = create_vehicle("supply_truck")
 print(supply_truck.stats["fuel"])
-uraltruck = create_vehicle("ural_truck")
-uraltruck.honk_horn()
+uraltruck1 = create_vehicle("ural_truck")
+uraltruck1.honk_horn()
+uraltruck2 = create_vehicle("ural_truck")
+
+convoy = Convoy([uraltruck1, uraltruck2])
+print(convoy.acceleration)
 
 class Game:
     def __init__(self):
