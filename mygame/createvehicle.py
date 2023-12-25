@@ -3,6 +3,7 @@ import json
 import os
 from gameobjects.supply_truck import Supply_Truck
 from gameobjects.ural_truck import Ural_Truck
+from gameobjects.t80 import T80
 
 def create_vehicle(vehicle_type):
 

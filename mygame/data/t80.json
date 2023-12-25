@@ -1,0 +1,16 @@
+{
+    "class" : "T80",
+    "name" : "Display_Name",
+    "uid" : 0,
+    "maxfuel" : 290.5893,
+    "fuelconsumptionperkilomenter" : 0.86743074626,
+    "maximumspeed" : 80,
+    "maximumreverse" : 13,
+    "acceleration" : 5,
+    "deceleration" : 3.5,
+    "reverseacceleration" : 1.5,
+    "mudresistance" : 0.95,
+    "maxsupply" : 50,
+    "length" : 7,
+    "width" : 3.4
+}

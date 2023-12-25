@@ -5,11 +5,16 @@ from graphics.drawbackground import DrawBackground
 from graphics.drawconvoy import DrawConvoy
 from gameobjects.convoy import Convoy
 
+all_sprites = pygame.sprite.Group()
+
 supply_truck = create_vehicle("supply_truck")
 uraltruck1 = create_vehicle("ural_truck")
 uraltruck2 = create_vehicle("ural_truck")
+t801 = create_vehicle("t80")
 
-convoy = Convoy([uraltruck1, uraltruck2])
+convoy = Convoy([uraltruck1, uraltruck2, t801])
+
+all_sprites.add(supply_truck, uraltruck1,uraltruck2, t801)
 
 class Game:
     def __init__(self):

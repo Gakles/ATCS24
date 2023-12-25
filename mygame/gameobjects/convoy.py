@@ -55,3 +55,6 @@ class Convoy:
         for vehicle in self.vehicles:
             vehicle.position_in_convoy = i
             i+=1
+            if vehicle.is_lead:
+                vehicle.is_lead = False
+        self.vehicles[0].is_lead = True
