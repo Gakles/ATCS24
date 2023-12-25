@@ -32,18 +32,14 @@ class Game:
             self.handle_events()
 
             # Update game logic here
-
-            if "right" in self.keys_pressed and not "left" in self.keys_pressed:
-                convoy.accelerate()
-            if "left" in self.keys_pressed and not "right" in self.keys_pressed:
-                convoy.decelerate()
             
-            print(convoy.currentspeed)
+            convoy.update(self.keys_pressed)
+            print(convoy.currentspeed, self.keys_pressed)
 
             # Draw game elements here
 
             self.drawbackground.update(convoy.currentspeed)
-
+            self.drawfpscounter()
             pygame.display.flip()
 
             # FPS limiter
@@ -68,3 +64,8 @@ class Game:
                     self.keys_pressed.discard("left")
                 elif event.key == pygame.K_RIGHT:
                     self.keys_pressed.discard("right")
+
+    def drawfpscounter(self):
+        font = pygame.font.Font(None, 36)
+        fps_text = font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
+        self.screen.blit(fps_text, (10, 10))
