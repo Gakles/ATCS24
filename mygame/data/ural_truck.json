@@ -5,9 +5,10 @@
     "maxfuel" : 79.2516,
     "fuelconsumptionperkilomenter" : 0.0792516,
     "maximumspeed" : 85,
+    "maximumreverse" : 15,
     "acceleration" : 5,
     "deceleration" : 2.5,
-    "reverse" : 1.5,
+    "reverseacceleration" : 1.5,
     "mudresistance" : 0.5,
     "maxsupply" : 12000
 }

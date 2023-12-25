@@ -12,9 +12,10 @@ class DrawBackground:
             color_index = i  % 2
             self.bars.append([self.colors[color_index], i*self.bar_width, 0, self.bar_width, self.window_size[1]])
 
-    def update(self, move_distance):
-        self.aggregatedistance += move_distance
-        if self.aggregatedistance > 2*self.bar_width:
+    def update(self, game_distance):
+        move_distance = .2 * self.bar_width * game_distance * 0.00462963333  #5 meters per bar * (1/20 screen width) * currentspeed in game(kph) * kph to mps/60 (for fps)
+        self.aggregatedistance -= move_distance
+        if self.aggregatedistance < 2*self.bar_width:
             self.aggregatedistance = self.aggregatedistance % (2*self.bar_width)
         for barinfo in self.bars:
             pos = barinfo[1] + self.aggregatedistance

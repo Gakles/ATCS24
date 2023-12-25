@@ -21,6 +21,7 @@ class Game:
         self.screen = pygame.display.set_mode(self.window_size)
         self.drawbackground = DrawBackground(self.screen, self.window_size)
         pygame.display.set_caption("My Game")
+        self.keys_pressed = set()
 
         # Initialize clock for FPS limiting
         self.clock = pygame.time.Clock()
@@ -32,9 +33,16 @@ class Game:
 
             # Update game logic here
 
+            if "right" in self.keys_pressed and not "left" in self.keys_pressed:
+                convoy.accelerate()
+            if "left" in self.keys_pressed and not "right" in self.keys_pressed:
+                convoy.decelerate()
+            
+            print(convoy.currentspeed)
+
             # Draw game elements here
 
-            self.drawbackground.update(1)
+            self.drawbackground.update(convoy.currentspeed)
 
             pygame.display.flip()
 
@@ -43,7 +51,6 @@ class Game:
 
     def handle_events(self):
         self.mouse_clicks = []
-        self.keys_pressed = set()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
