@@ -4,7 +4,7 @@ class Vehicle(pygame.sprite.Sprite):
     def __init__(self, stats):
         super().__init__()
         self.stats = stats
-        if "imageaddress" in self.stats:
+        if "hullimageaddress" in self.stats:
             self.image = pygame.image.load(self.stats["hullimageaddress"])
             self.image = pygame.transform.scale(self.image, (int(self.stats["length"] * self.stats["metersize"]), int(self.stats["width"] * self.stats["metersize"])))
         else:
