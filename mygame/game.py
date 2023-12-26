@@ -10,12 +10,12 @@ all_sprites = pygame.sprite.Group()
 window_width = 1440
 window_height = 780
 window_size = (window_width, window_height)
-supply_truck = create_vehicle("supply_truck", window_size)
-uraltruck1 = create_vehicle("ural_truck", window_size)
-uraltruck2 = create_vehicle("ural_truck", window_size)
+#supply_truck = create_vehicle("supply_truck", window_size)
+#uraltruck1 = create_vehicle("ural_truck", window_size)
+#uraltruck2 = create_vehicle("ural_truck", window_size)
 t801 = create_vehicle("t80", window_size)
 
-all_sprites.add(supply_truck, uraltruck1,uraltruck2, t801)
+all_sprites.add(t801)
 
 class Game:
     def __init__(self):
@@ -40,6 +40,7 @@ class Game:
             # Draw game elements here
             self.drawbackground.draw()
             self.drawfpscounter()
+            all_sprites.update()
             all_sprites.draw(self.screen)
             pygame.display.flip()
 
