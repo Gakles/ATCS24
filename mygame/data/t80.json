@@ -14,5 +14,5 @@
     "length" : 7,
     "width" : 3.4,
     "turretrotation" : 18,
-    "imageaddress" : "mygame/graphics/images/t80.png"
+    "hullimageaddress" : "mygame/graphics/images/t80hull.png"
 }
