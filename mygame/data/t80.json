@@ -12,5 +12,6 @@
     "mudresistance" : 0.95,
     "maxsupply" : 50,
     "length" : 7,
-    "width" : 3.4
+    "width" : 3.4,
+    "turretrotation" : 18
 }

@@ -12,5 +12,6 @@
     "mudresistance" : 0,
     "maxsupply" : 0,
     "length" : 0,
-    "width" : 0
+    "width" : 0,
+    "turretrotation" : 0
 }
