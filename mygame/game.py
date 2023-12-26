@@ -1,30 +1,27 @@
 import pygame
 import sys
 from createvehicle import create_vehicle
+from player import Player
 from graphics.drawbackground import DrawBackground
-from graphics.drawconvoy import DrawConvoy
-from gameobjects.convoy import Convoy
 
 all_sprites = pygame.sprite.Group()
 
-supply_truck = create_vehicle("supply_truck")
-uraltruck1 = create_vehicle("ural_truck")
-uraltruck2 = create_vehicle("ural_truck")
-t801 = create_vehicle("t80")
 
-convoy = Convoy([uraltruck1, uraltruck2, t801])
+window_width = 1440
+window_height = 780
+window_size = (window_width, window_height)
+supply_truck = create_vehicle("supply_truck", window_size)
+uraltruck1 = create_vehicle("ural_truck", window_size)
+uraltruck2 = create_vehicle("ural_truck", window_size)
+t801 = create_vehicle("t80", window_size)
 
 all_sprites.add(supply_truck, uraltruck1,uraltruck2, t801)
 
 class Game:
     def __init__(self):
-        self.window_width = 1440
-        self.window_height = 780
-        self.window_size = (self.window_width, self.window_height)
-        self.screen = pygame.display.set_mode(self.window_size)
-        self.drawbackground = DrawBackground(self.screen, self.window_size)
-        convoy.update_convoy_order()
-        self.drawconvoy = DrawConvoy(self.screen, self.window_size, convoy)
+        self.screen = pygame.display.set_mode(window_size)
+        self.drawbackground = DrawBackground(self.screen, window_size)
+        self.player = Player(t801, self.drawbackground)
         pygame.display.set_caption("My Game")
         self.keys_pressed = set()
 
@@ -38,13 +35,12 @@ class Game:
 
             # Update game logic here
             
-            convoy.update(self.keys_pressed)
+            self.player.movevehicle(self.keys_pressed)
 
             # Draw game elements here
-
-            self.drawbackground.update(convoy.currentspeed)
+            self.drawbackground.draw()
             self.drawfpscounter()
-            self.drawconvoy.drawvehicles()
+            all_sprites.draw(self.screen)
             pygame.display.flip()
 
             # FPS limiter
@@ -60,15 +56,24 @@ class Game:
             
             # Keydown and Keyup events for arrow keys
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.keys_pressed.add("left")
-                elif event.key == pygame.K_RIGHT:
-                    self.keys_pressed.add("right")
+                if event.key == pygame.K_a:
+                    self.keys_pressed.add("a")
+                elif event.key == pygame.K_d:
+                    self.keys_pressed.add("d")
+                elif event.key == pygame.K_w:
+                    self.keys_pressed.add("w")
+                elif event.key == pygame.K_s:
+                    self.keys_pressed.add("s")
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.keys_pressed.discard("left")
-                elif event.key == pygame.K_RIGHT:
-                    self.keys_pressed.discard("right")
+                if event.key == pygame.K_a:
+                    self.keys_pressed.discard("a")
+                elif event.key == pygame.K_d:
+                    self.keys_pressed.discard("d")
+                elif event.key == pygame.K_w:
+                    self.keys_pressed.discard("w")
+                elif event.key == pygame.K_s:
+                    self.keys_pressed.discard("s")
+
 
     def drawfpscounter(self):
         font = pygame.font.Font(None, 36)
