@@ -7,10 +7,10 @@ class Turret(pygame.sprite.Sprite):
         self.vehicle = vehicle
         if "turretimageaddress" in self.vehicle.stats:
             self.image = pygame.image.load(self.vehicle.stats["turretimageaddress"])
-            self.image = pygame.transform.scale(self.image, (int(self.vehicle.stats["length"] * self.vehicle.stats["metersize"]), int(self.vehicle.stats["width"] * self.vehicle.stats["metersize"])))
+            self.image = pygame.transform.scale(self.image, (int(self.vehicle.stats["turretheight"] * self.vehicle.stats["metersize"]), int(self.vehicle.stats["turretwidth"] * self.vehicle.stats["metersize"])))
         else:
-            self.image = pygame.Surface((int(self.vehicle.stats["width"] * self.vehicle.stats["metersize"]),
-                                        int(self.vehicle.stats["length"] * self.vehicle.stats["metersize"])))
+            self.image = pygame.Surface((int(self.vehicle.stats["turretwidth"] * self.vehicle.stats["metersize"]),
+                                        int(self.vehicle.stats["turretheight"] * self.vehicle.stats["metersize"])))
         self.image_clean = self.image.copy()
         self.rect = self.image.get_rect()
         self.rect.center = (self.vehicle.position)

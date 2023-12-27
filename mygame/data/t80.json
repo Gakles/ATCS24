@@ -18,6 +18,8 @@
     "turretimageaddress" : "mygame/graphics/images/t80turret.png",
     "turret" : true,
     "turret_offset" : 0,
-    "turret_width" : 0,
-    "turret_height" : 0 
+    "turretwidth" : 3.2,
+    "turretheight" : 3.2,
+    "gunwidth" : 0.2,
+    "gunelength" : 
 }
