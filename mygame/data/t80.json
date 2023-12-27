@@ -17,5 +17,7 @@
     "hullimageaddress" : "mygame/graphics/images/t80hull.png",
     "turretimageaddress" : "mygame/graphics/images/t80turret.png",
     "turret" : true,
-    "turret_offset" : 0
+    "turret_offset" : 0,
+    "turret_width" : 0,
+    "turret_height" : 0 
 }

@@ -35,9 +35,7 @@ class Game:
             self.handle_events()
 
             # Update game logic here
-            
-            self.player.movevehicle(self.keys_pressed)
-            self.player.moveturret(pygame.mouse.get_pos())
+            self.player.updatevehicle(self.keys_pressed, pygame.mouse.get_pos())
 
             # Draw game elements here
             self.drawbackground.draw()

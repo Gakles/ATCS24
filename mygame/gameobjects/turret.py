@@ -16,13 +16,12 @@ class Turret(pygame.sprite.Sprite):
         self.rect.center = (self.vehicle.position)
         self.turret_angle = 0
         
-    def updateturret(self, mouse_angle):
+    def updateturret(self, mouse_angle, hull_rotation):
         self.turret_angle_adjusted = self.turret_angle % 360
         if mouse_angle < 0:
             mouse_angle = mouse_angle * -1
         else:
             mouse_angle = 360 - mouse_angle
-        print(self.turret_angle_adjusted, mouse_angle)
         
         angle_difference = (mouse_angle - self.turret_angle_adjusted + 180) % 360 - 180
 
@@ -39,6 +38,7 @@ class Turret(pygame.sprite.Sprite):
             self.turret_angle -= min(abs(angle_difference), self.vehicle.stats["turretrotation"]/60)
 
         # Ensure the turret angle is within [0, 360)
+        self.turret_angle -= hull_rotation
         self.turret_angle = self.turret_angle % 360
 
         if abs(mouse_angle - self.turret_angle_adjusted) < self.vehicle.stats["turretrotation"]/60:
