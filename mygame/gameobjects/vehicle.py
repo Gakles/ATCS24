@@ -22,10 +22,6 @@ class Vehicle(pygame.sprite.Sprite):
     def update(self):
         self.image = self.image_clean.copy()
         rotated_image = pygame.transform.rotate(self.image, self.angle)
-
-        # Resize the sprite 
-        #self.image = pygame.transform.scale(rotated_image, (int(self.stats["width"] * self.stats["metersize"]),
-        #                                                    int(self.stats["length"] * self.stats["metersize"])))
         self.rect = rotated_image.get_rect(center = self.image.get_rect(center = (self.rect.centerx, self.rect.centery)).center)
         self.image = rotated_image
 

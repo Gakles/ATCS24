@@ -40,3 +40,11 @@ class Player:
                     else:
                         self.vehiclecurrent_angle += self.rotation_speed/2
         self.currentvehicle.angle = -math.degrees(self.vehiclecurrent_angle)
+
+    def moveturret(self, mousepos):
+        if self.currentvehicle.stats["turret"]:
+            #print(self.currentvehicle.position, mousepos)
+            angle_radians = math.atan2(mousepos[1] - self.currentvehicle.position[1], mousepos[0] - self.currentvehicle.position[0])
+            angle_degrees = math.degrees(angle_radians)
+            self.currentvehicle.turret.updateturret(angle_degrees)
+        

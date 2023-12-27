@@ -5,7 +5,7 @@ from gameobjects.supply_truck import Supply_Truck
 from gameobjects.ural_truck import Ural_Truck
 from gameobjects.t80 import T80
 
-def create_vehicle(vehicle_type, window_size):
+def create_vehicle(vehicle_type, window_size, all_sprites):
 
     current_directory = os.path.dirname(__file__)  # Get the directory of the current script
     file_path = os.path.join(current_directory, "data", f"{vehicle_type.lower()}.json")
@@ -27,6 +27,9 @@ def create_vehicle(vehicle_type, window_size):
     data["window_width"] = window_size[0]
     data["window_height"] = window_size[1]
     data["metersize"] = data["window_width"]/100
-    return vehicle_class(data)
+    vehicle = vehicle_class(data)
+    if vehicle.stats["turret"]:
+        all_sprites.add(vehicle.turret)
+    return vehicle
 
 # Add more conditions or classes as needed

@@ -13,7 +13,7 @@ window_size = (window_width, window_height)
 #supply_truck = create_vehicle("supply_truck", window_size)
 #uraltruck1 = create_vehicle("ural_truck", window_size)
 #uraltruck2 = create_vehicle("ural_truck", window_size)
-t801 = create_vehicle("t80", window_size)
+t801 = create_vehicle("t80", window_size, all_sprites)
 
 all_sprites.add(t801)
 
@@ -36,12 +36,14 @@ class Game:
             # Update game logic here
             
             self.player.movevehicle(self.keys_pressed)
+            self.player.moveturret(pygame.mouse.get_pos())
 
             # Draw game elements here
             self.drawbackground.draw()
             self.drawfpscounter()
             all_sprites.update()
             all_sprites.draw(self.screen)
+            pygame.draw.line(self.screen, (0,0,0), pygame.mouse.get_pos(), self.player.currentvehicle.position)
             pygame.display.flip()
 
             # FPS limiter
