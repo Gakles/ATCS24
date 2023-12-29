@@ -6,6 +6,7 @@ from graphics.drawbackground import DrawBackground
 
 all_sprites = pygame.sprite.Group()
 turret_sprites = pygame.sprite.Group()
+gun_sprites = pygame.sprite.Group()
 
 
 window_width = 1440
@@ -14,7 +15,7 @@ window_size = (window_width, window_height)
 #supply_truck = create_vehicle("supply_truck", window_size)
 #uraltruck1 = create_vehicle("ural_truck", window_size)
 #uraltruck2 = create_vehicle("ural_truck", window_size)
-t801 = create_vehicle("t80", window_size, turret_sprites)
+t801 = create_vehicle("t80", window_size, turret_sprites, gun_sprites)
 
 all_sprites.add(t801)
 
@@ -44,6 +45,8 @@ class Game:
             all_sprites.draw(self.screen)
             turret_sprites.update()
             turret_sprites.draw(self.screen)
+            gun_sprites.update()
+            gun_sprites.draw(self.screen)
             pygame.draw.line(self.screen, (0,0,0), pygame.mouse.get_pos(), self.player.currentvehicle.position)
             pygame.display.flip()
 

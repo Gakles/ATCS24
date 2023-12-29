@@ -50,7 +50,6 @@ class Player:
     def updatevehicle(self, keys_pressed, mousepos):
         new_angle = self.movevehicle(keys_pressed)
         hull_rotation = self.currentvehicle.angle - new_angle
-        print(hull_rotation, self.currentvehicle.angle, new_angle)
         self.currentvehicle.angle = new_angle
         self.moveturret(mousepos, hull_rotation)
         

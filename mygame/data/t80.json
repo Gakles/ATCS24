@@ -21,5 +21,6 @@
     "turretwidth" : 3.2,
     "turretheight" : 3.2,
     "gunwidth" : 0.2,
-    "gunelength" : 
+    "gunheight" : 6.5,
+    "gunimageaddress" : "mygame/graphics/images/t80gun.png"
 }

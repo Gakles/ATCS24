@@ -1,5 +1,6 @@
 import pygame
 import math
+from gameobjects.gun import Gun
 
 class Turret(pygame.sprite.Sprite):
     def __init__(self, vehicle):
@@ -15,6 +16,7 @@ class Turret(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.vehicle.position)
         self.turret_angle = 0
+        self.gun = Gun(self)
         
     def updateturret(self, mouse_angle, hull_rotation):
         self.turret_angle_adjusted = self.turret_angle % 360
@@ -43,10 +45,10 @@ class Turret(pygame.sprite.Sprite):
 
         if abs(mouse_angle - self.turret_angle_adjusted) < self.vehicle.stats["turretrotation"]/60:
             self.turret_angle = mouse_angle
+        self.gun.updategun()
 
     def update(self):
         self.image = self.image_clean.copy()
         rotated_image = pygame.transform.rotate(self.image, self.turret_angle)
         self.rect = rotated_image.get_rect(center = self.image.get_rect(center = (self.rect.centerx, self.rect.centery)).center)
         self.image = rotated_image
-    
